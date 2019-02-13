@@ -18,7 +18,7 @@ def appender():
 	print (j)
 
 def main():
-	writer()
+	appender()
 
 if __name__ == '__main__':
 	main()
