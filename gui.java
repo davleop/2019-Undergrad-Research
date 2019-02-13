@@ -22,6 +22,11 @@ class gui extends JFrame implements ActionListener {
         // set application icon
         ImageIcon img = new ImageIcon("pic.png");
         this.setIconImage(img.getImage());
+
+        // Help menu bar (how to use)
+        JMenuBar mb = new JMenuBar();
+        JMenu m1 = new JMenu("Help");
+        mb.add(m1);
         
         JButton start = new JButton("Start"); // TODO(David): Make sure the file path is set
                                               //              correctly.
@@ -30,8 +35,12 @@ class gui extends JFrame implements ActionListener {
         start.addActionListener(this);
         stop.addActionListener(this);
 
-        add(start);
-        add(stop);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(start);
+        buttonPanel.add(stop);
+
+        add(BorderLayout.NORTH,mb);
+        add(BorderLayout.CENTER,buttonPanel);
     }
 
     @Override
@@ -54,11 +63,8 @@ class gui extends JFrame implements ActionListener {
         frame.pack();
         frame.setSize(350,150);
 
-        JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("Help");
-        mb.add(m1);
-
         frame.setVisible(true);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
