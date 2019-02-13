@@ -40,6 +40,7 @@ class gui {
         // Add more panels
         panel2.add(filepath_label);
         panel2.add(filepath);
+        
 
         //Adding Components to the frame.
         frame.add(BorderLayout.SOUTH, panel1);
