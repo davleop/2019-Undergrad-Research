@@ -2,7 +2,19 @@
 // even if you are working with just swings.
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.awt.event.*;
+
 class gui {
+    private String path = "";
+
     public static void main(String args[]) {
 
         //Creating the Frame
@@ -47,5 +59,18 @@ class gui {
         frame.add(BorderLayout.NORTH, mb);
         frame.setResizable(false);
         frame.setVisible(true);
+
+        this.path = filepath.getText();
+        start.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent d) {
+        List<String> lines = Arrays.asList(this.path);
+        Path file = Paths.get("filepath.txt");
+        try {
+            Files.write(file, lines, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            System.out.println("What is file?");
+        }
     }
 }
