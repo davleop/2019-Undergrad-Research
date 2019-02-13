@@ -8,3 +8,5 @@ run_write:
 run_append:
 			cls
 			python3 stress_by_write_test.py
+clean:
+			rm -rf gui.class
