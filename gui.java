@@ -7,7 +7,7 @@ class gui {
 
         //Creating the Frame
         JFrame frame = new JFrame("Stress Tester");
-        ImageIcon img = new ImageIcon("pic.jpg");
+        ImageIcon img = new ImageIcon("pic.png");
         frame.setIconImage(img.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 150);
@@ -34,6 +34,7 @@ class gui {
         // Create a text box to put in for the file path
         JTextField filepath = new JTextField(12);
 
+        // New panel for easily controlling other options
         JPanel panel2 = new JPanel();
 
         // Add more panels
