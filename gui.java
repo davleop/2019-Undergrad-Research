@@ -12,30 +12,63 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.awt.event.*;
 
-class gui {
+class gui extends JFrame implements ActionListener {
     private String path = "";
 
-    public static void main(String args[]) {
+    public gui() {
+        this.setTitle("Stress Tester");
+        this.getContentPane().setLayout(new FlowLayout());
 
-        //Creating the Frame
-        JFrame frame = new JFrame("Stress Tester");
+        // set application icon
         ImageIcon img = new ImageIcon("pic.png");
-        frame.setIconImage(img.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(350, 150);
+        this.setIconImage(img.getImage());
+        
+        JButton start = new JButton("Start"); // TODO(David): Make sure the file path is set
+                                              //              correctly.
+        JButton stop = new JButton("Stop");   // TODO(David): Make a pop up window for
+                                              //              "Are you sure you want to stop?"
+        start.addActionListener(this);
+        stop.addActionListener(this);
 
+        add(start);
+        add(stop);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        String action = ae.getActionCommand();
+        if (action.equals("Start")) {
+            List<String> lines = Arrays.asList(this.path);
+            Path file = Paths.get("filepath.txt");
+            try {
+                Files.write(file, lines, Charset.forName("UTF-8"));
+            } catch (IOException e) {
+                System.out.println("What is file?");
+            }
+        }
+    }
+
+    private static void createGUI() {
+        JFrame frame = new gui();
+
+        frame.pack();
+        frame.setSize(350,150);
+
+        JMenuBar mb = new JMenuBar();
+        JMenu m1 = new JMenu("Help");
+        mb.add(m1);
+
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String args[]) {
+/*
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
         JMenu m1 = new JMenu("Help");
         mb.add(m1);
 
-        //Creating the panel at bottom and adding components
-        JPanel panel1 = new JPanel(); // the panel is not visible in output
-        JButton start = new JButton("Start"); // TODO(David): Make sure the file path is set
-                                              //              correctly.
-
-        JButton stop = new JButton("Stop");   // TODO(David): Make a pop up window for
-                                              //              "Are you sure you want to stop?"
         panel1.add(start);
         panel1.add(stop);
 
@@ -62,15 +95,11 @@ class gui {
 
         this.path = filepath.getText();
         start.addActionListener(this);
-    }
-
-    public void actionPerformed(ActionEvent d) {
-        List<String> lines = Arrays.asList(this.path);
-        Path file = Paths.get("filepath.txt");
-        try {
-            Files.write(file, lines, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            System.out.println("What is file?");
-        }
+*/
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createGUI();
+            }
+        });
     }
 }

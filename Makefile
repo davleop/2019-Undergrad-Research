@@ -1,6 +1,6 @@
 all:
 			cls
-			javac gui.java
+			javac -Xdiags:verbose gui.java
 			java gui
 run_write3:
 			cls
