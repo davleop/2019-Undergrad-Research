@@ -17,7 +17,7 @@ class gui extends JFrame {
 
     public static boolean popup() {
         JDialog.setDefaultLookAndFeelDecorated(true);
-        int response = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO QUIT THIS OPERATION?", "WARNING",
+        int response = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO DO THIS OPERATION?", "WARNING",
             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
             return false;
@@ -30,6 +30,12 @@ class gui extends JFrame {
         }
     }
 
+    public static void invalidPath() {
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        JOptionPane.showMessageDialog(null, "Invalid filepath. Try again...", "Oops",
+         JOptionPane.ERROR_MESSAGE);
+    }
+
     public gui() {
         this.setTitle("Stress Tester");
         this.getContentPane().setLayout(new FlowLayout());
@@ -38,14 +44,16 @@ class gui extends JFrame {
         ImageIcon img = new ImageIcon("pic.png");
         this.setIconImage(img.getImage());
 
-        JButton start = new JButton("Start"); // TODO(David): Make sure the file path is set
-                                              //              correctly.
-        JButton stop = new JButton("Stop");   // TODO(David): Make a pop up window for
-                                              //              "Are you sure you want to stop?"
+        JButton start = new JButton("Start");
+        JButton stop  = new JButton("Stop");
+        JButton exit  = new JButton("Exit");
+
+        stop.setEnabled(false);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(start);
         buttonPanel.add(stop);
+        buttonPanel.add(exit);
 
         JLabel filepath_label = new JLabel("Filepath to be tested on:");
         filepath_label.setHorizontalAlignment(SwingConstants.LEFT);
@@ -59,18 +67,24 @@ class gui extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 String string = filepath.getText().toString();
 
-                List<String> lines = Arrays.asList(string);
                 Path file = Paths.get("filepath.txt");
-                
-                try {
-                    // Disable things so that the process isn't screwed up...
-                    start.setEnabled(false);
-                    filepath.setEditable(false);
-                    
-                    // Save to file so that the Python program can know where to go...
-                    Files.write(file, lines, Charset.forName("UTF-8"));
-                } catch (IOException e) {
-                    System.out.println("INVALID WRITE --> TRY AGAIN LATER");
+
+                if (Files.exists(Paths.get(string))) {
+                    try {
+                        // Disable things so that the process isn't screwed up...
+                        start.setEnabled(false);
+                        exit.setEnabled(false);
+                        stop.setEnabled(true);
+                        filepath.setEditable(false);
+                        
+                        // Save to file so that the Python program can know where to go...
+                        List<String> lines = Arrays.asList(string);
+                        Files.write(file, lines, Charset.forName("UTF-8"));
+                    } catch (IOException e) {
+                        System.out.println("INVALID WRITE --> TRY AGAIN LATER");
+                    }
+                } else {
+                    invalidPath();
                 }
             }
         });
@@ -80,7 +94,20 @@ class gui extends JFrame {
                 boolean response = popup();
                 if (response) {
                     start.setEnabled(true);
+                    stop.setEnabled(false);
                     filepath.setEditable(true);
+                    exit.setEnabled(true);
+                    // TODO(David): add kill process and clean up data...
+                }
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                boolean response = popup();
+                if (response) {
+                    // TODO(David): add kill process and clean up data...
+                    dispose();
                 }
             }
         });
@@ -101,7 +128,7 @@ class gui extends JFrame {
 
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 
     public static void main(String args[]) {
