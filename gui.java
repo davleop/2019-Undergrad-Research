@@ -17,8 +17,8 @@ class gui extends JFrame {
 
     public static boolean popup() {
         JDialog.setDefaultLookAndFeelDecorated(true);
-        int response = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO DO THIS OPERATION?", "WARNING",
-            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO DO THIS OPERATION?"
+            , "WARNING", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
             return false;
         } else if (response == JOptionPane.YES_OPTION) {
@@ -80,6 +80,8 @@ class gui extends JFrame {
                         // Save to file so that the Python program can know where to go...
                         List<String> lines = Arrays.asList(string);
                         Files.write(file, lines, Charset.forName("UTF-8"));
+
+                        // TODO(David): Make method to invoke Python testing
                     } catch (IOException e) {
                         System.out.println("INVALID WRITE --> TRY AGAIN LATER");
                     }
@@ -117,15 +119,13 @@ class gui extends JFrame {
     }
 
     private static void createGUI() {
-        JFrame frame = new gui();
+        JFrame frame  = new gui();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.pack();
         frame.setSize(350,150);
-
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
-        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
-
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, 
+            dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
