@@ -109,6 +109,7 @@ class gui extends JFrame {
                 boolean response = popup();
                 if (response) {
                     // TODO(David): add kill process and clean up data...
+                    setVisible(false);
                     dispose();
                 }
             }
