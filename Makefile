@@ -15,4 +15,4 @@ run_write:
 			cls
 			python stress_by_write_test
 clean:
-			rm -rf gui.class
+			rm -rf *.class

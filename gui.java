@@ -12,8 +12,29 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.awt.event.*;
 
-class gui extends JFrame implements ActionListener {
+class gui extends JFrame {
     private String path = "";
+
+    public static void popup() {
+        JFrame pop = new JFrame("???");
+        pop.getContentPane().setLayout(new FlowLayout());
+        pop.pack();
+        pop.setSize(350,150);
+
+        // TODO(David): Set and find Alert icon image here
+        //ImageIcon img = new ImageIcon("alert.jpg");
+        //pop.setIconImage(img.getImage());
+
+        // TODO(David): Add yes or no buttons with functionality to close window
+        //              and carry out task given action event for button.
+        //              Also: put buttons on JPanel for ease...
+
+        pop.setVisible(true);
+        pop.setResizable(false);
+        pop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+    }
 
     public gui() {
         this.setTitle("Stress Tester");
@@ -23,38 +44,43 @@ class gui extends JFrame implements ActionListener {
         ImageIcon img = new ImageIcon("pic.png");
         this.setIconImage(img.getImage());
 
-        // Help menu bar (how to use)
-        JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("Help");
-        mb.add(m1);
-        
         JButton start = new JButton("Start"); // TODO(David): Make sure the file path is set
                                               //              correctly.
         JButton stop = new JButton("Stop");   // TODO(David): Make a pop up window for
                                               //              "Are you sure you want to stop?"
-        start.addActionListener(this);
-        stop.addActionListener(this);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(start);
         buttonPanel.add(stop);
 
-        add(BorderLayout.NORTH,mb);
-        add(BorderLayout.CENTER,buttonPanel);
-    }
+        JLabel filepath_label = new JLabel("Filepath to be tested on:");
+        filepath_label.setHorizontalAlignment(SwingConstants.LEFT);
+        JTextField filepath = new JTextField(12);
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        String action = ae.getActionCommand();
-        if (action.equals("Start")) {
-            List<String> lines = Arrays.asList(this.path);
-            Path file = Paths.get("filepath.txt");
-            try {
-                Files.write(file, lines, Charset.forName("UTF-8"));
-            } catch (IOException e) {
-                System.out.println("What is file?");
+        JPanel filePanel = new JPanel();
+        filePanel.add(filepath_label);
+        filePanel.add(filepath);
+
+        start.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                List<String> lines = Arrays.asList(filepath.getText().toString());
+                Path file = Paths.get("filepath.txt");
+                try {
+                    Files.write(file, lines, Charset.forName("UTF-8"));
+                } catch (IOException e) {
+                    System.out.println("What is file?");
+                }
             }
-        }
+        });
+
+        stop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                popup();
+            }
+        });
+
+        add(BorderLayout.CENTER, buttonPanel);
+        add(BorderLayout.SOUTH, filePanel);
     }
 
     private static void createGUI() {
