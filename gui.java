@@ -15,25 +15,19 @@ import java.awt.event.*;
 class gui extends JFrame {
     private String path = "";
 
-    public static void popup() {
-        JFrame pop = new JFrame("???");
-        pop.getContentPane().setLayout(new FlowLayout());
-        pop.pack();
-        pop.setSize(350,150);
-
-        // TODO(David): Set and find Alert icon image here
-        //ImageIcon img = new ImageIcon("alert.jpg");
-        //pop.setIconImage(img.getImage());
-
-        // TODO(David): Add yes or no buttons with functionality to close window
-        //              and carry out task given action event for button.
-        //              Also: put buttons on JPanel for ease...
-
-        pop.setVisible(true);
-        pop.setResizable(false);
-        pop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+    public static boolean popup() {
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        int response = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO QUIT THIS OPERATION?", "WARNING",
+            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            return false;
+        } else if (response == JOptionPane.YES_OPTION) {
+            return true;
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            return false;
+        } else {
+            return false;
+        }
     }
 
     public gui() {
@@ -63,19 +57,31 @@ class gui extends JFrame {
 
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                List<String> lines = Arrays.asList(filepath.getText().toString());
+                String string = filepath.getText().toString();
+
+                List<String> lines = Arrays.asList(string);
                 Path file = Paths.get("filepath.txt");
+                
                 try {
+                    // Disable things so that the process isn't screwed up...
+                    start.setEnabled(false);
+                    filepath.setEditable(false);
+                    
+                    // Save to file so that the Python program can know where to go...
                     Files.write(file, lines, Charset.forName("UTF-8"));
                 } catch (IOException e) {
-                    System.out.println("What is file?");
+                    System.out.println("INVALID WRITE --> TRY AGAIN LATER");
                 }
             }
         });
 
         stop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                popup();
+                boolean response = popup();
+                if (response) {
+                    start.setEnabled(true);
+                    filepath.setEditable(true);
+                }
             }
         });
 
@@ -89,45 +95,16 @@ class gui extends JFrame {
         frame.pack();
         frame.setSize(350,150);
 
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String args[]) {
-/*
-        //Creating the MenuBar and adding components
-        JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("Help");
-        mb.add(m1);
-
-        panel1.add(start);
-        panel1.add(stop);
-
-        // Create label for text field...
-        JLabel filepath_label = new JLabel("Filepath to be tested on:");
-        filepath_label.setHorizontalAlignment(SwingConstants.LEFT);
-
-        // Create a text box to put in for the file path
-        JTextField filepath = new JTextField(12);
-
-        // New panel for easily controlling other options
-        JPanel panel2 = new JPanel();
-
-        // Add more panels
-        panel2.add(filepath_label);
-        panel2.add(filepath);
-
-        //Adding Components to the frame.
-        frame.add(BorderLayout.SOUTH, panel1);
-        frame.add(BorderLayout.CENTER, panel2);
-        frame.add(BorderLayout.NORTH, mb);
-        frame.setResizable(false);
-        frame.setVisible(true);
-
-        this.path = filepath.getText();
-        start.addActionListener(this);
-*/
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createGUI();
