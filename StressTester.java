@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.awt.event.*;
 
-class gui extends JFrame {
+class StressTester extends JFrame {
     private String path = "";
 
     private static void runWin_P3() throws IOException {
@@ -92,7 +92,7 @@ class gui extends JFrame {
          JOptionPane.ERROR_MESSAGE);
     }
 
-    public gui() {
+    public StressTester() {
         this.setTitle("Stress Tester");
         this.getContentPane().setLayout(new FlowLayout());
 
@@ -137,6 +137,7 @@ class gui extends JFrame {
                         List<String> lines = Arrays.asList(string);
                         Files.write(file, lines, Charset.forName("UTF-8"));
 
+                        // Run Python3 please...
                         try {
                             runWin_P3();
                         } catch (Exception e) {
@@ -192,7 +193,7 @@ class gui extends JFrame {
     }
 
     private static void createGUI() {
-        JFrame frame  = new gui();
+        JFrame frame  = new StressTester();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.pack();
