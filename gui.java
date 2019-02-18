@@ -15,7 +15,63 @@ import java.awt.event.*;
 class gui extends JFrame {
     private String path = "";
 
-    public static boolean popup() {
+    private void runWin_P3() throws IOException {
+        ProcessBuilder builder = new ProcessBuilder(
+            "cmd.exe", "/c", "python3 test.py");
+        builder.redirectErrorStream(true);
+        Process p = builder.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) {break;}
+            System.out.println(line);
+        }
+    }
+
+    private void runLinux_P3() throws IOException {
+        ProcessBuilder builder = new ProcessBuilder(
+            "bash", "-c", "python3 test.py");
+        builder.redirectErrorStream(true);
+        Process p = builder.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) {break;}
+            System.out.println(line);
+        }
+    }
+
+    private void runWin_P() throws IOException {
+        ProcessBuilder builder = new ProcessBuilder(
+            "cmd.exe", "/c", "python test.py");
+        builder.redirectErrorStream(true);
+        Process p = builder.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) {break;}
+            System.out.println(line);
+        }
+    }
+
+    private void runLinux_P() throws IOException {
+        ProcessBuilder builder = new ProcessBuilder(
+            "bash", "-c", "python test.py");
+        builder.redirectErrorStream(true);
+        Process p = builder.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) {break;}
+            System.out.println(line);
+        }
+    }
+
+    private static boolean popup() {
         JDialog.setDefaultLookAndFeelDecorated(true);
         int response = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO DO THIS OPERATION?"
             , "WARNING", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -30,7 +86,7 @@ class gui extends JFrame {
         }
     }
 
-    public static void invalidPath() {
+    private static void invalidPath() {
         JDialog.setDefaultLookAndFeelDecorated(true);
         JOptionPane.showMessageDialog(null, "Invalid filepath. Try again...", "Oops",
          JOptionPane.ERROR_MESSAGE);
