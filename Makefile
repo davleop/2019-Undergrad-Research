@@ -16,3 +16,4 @@ run_write:
 			python stress_by_write_test
 clean:
 			rm -rf *.class
+			rm filepath.txt
