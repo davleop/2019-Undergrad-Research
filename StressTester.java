@@ -147,7 +147,12 @@ class StressTester extends JFrame {
 
                         // Run Python3 please...
                         try {
-                            System.out.println(runWin_P3());
+                            String out = runWin_P3();
+                            if (out.contains("'python3'")) {
+                                throw new Exception("Oops");
+                            } else {
+                                System.out.println(out);
+                            }
                         } catch (Exception a) {
                             try {
                                 System.out.println(runWin_P());
