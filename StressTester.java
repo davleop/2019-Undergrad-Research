@@ -15,6 +15,7 @@ import java.awt.event.*;
 class StressTester extends JFrame {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
+    private final static String file_to_run = "test.py";
 
     private static boolean isWindows() {
         return (OS.indexOf("win") >= 0);
@@ -109,14 +110,14 @@ class StressTester extends JFrame {
                         // Run Python3 please...
                         if (isWindows()) {
                             if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
-                                System.out.println(run("cmd.exe", "/c", "python test.py"));
+                                System.out.println(run("cmd.exe", "/c", "python " + file_to_run));
                             else
-                                System.out.println(run("cmd.exe", "/c", "python3 test.py"));
+                                System.out.println(run("cmd.exe", "/c", "python3 " + file_to_run));
                         } else if (isUnix()) {
                             if (run("bash", "-c", "python --version").contains("Python 3"))
-                                System.out.println(run("bash", "-c", "python test.py"));
+                                System.out.println(run("bash", "-c", "python " + file_to_run));
                             else
-                                System.out.println(run("bash", "-c", "python3 test.py"));
+                                System.out.println(run("bash", "-c", "python3 " + file_to_run));
                         } else {
                             System.out.println("Not supported operating system.");
                         }
