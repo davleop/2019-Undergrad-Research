@@ -15,7 +15,7 @@ import java.awt.event.*;
 class gui extends JFrame {
     private String path = "";
 
-    private void runWin_P3() throws IOException {
+    private static void runWin_P3() throws IOException {
         ProcessBuilder builder = new ProcessBuilder(
             "cmd.exe", "/c", "python3 test.py");
         builder.redirectErrorStream(true);
@@ -29,7 +29,7 @@ class gui extends JFrame {
         }
     }
 
-    private void runLinux_P3() throws IOException {
+    private static void runLinux_P3() throws IOException {
         ProcessBuilder builder = new ProcessBuilder(
             "bash", "-c", "python3 test.py");
         builder.redirectErrorStream(true);
@@ -43,7 +43,7 @@ class gui extends JFrame {
         }
     }
 
-    private void runWin_P() throws IOException {
+    private static void runWin_P() throws IOException {
         ProcessBuilder builder = new ProcessBuilder(
             "cmd.exe", "/c", "python test.py");
         builder.redirectErrorStream(true);
@@ -57,7 +57,7 @@ class gui extends JFrame {
         }
     }
 
-    private void runLinux_P() throws IOException {
+    private static void runLinux_P() throws IOException {
         ProcessBuilder builder = new ProcessBuilder(
             "bash", "-c", "python test.py");
         builder.redirectErrorStream(true);
@@ -137,7 +137,23 @@ class gui extends JFrame {
                         List<String> lines = Arrays.asList(string);
                         Files.write(file, lines, Charset.forName("UTF-8"));
 
-                        // TODO(David): Make method to invoke Python testing
+                        try {
+                            runWin_P3();
+                        } catch (Exception e) {
+                            try {
+                                runWin_P();
+                            } catch (Exception x) {
+                                try {
+                                    runLinux_P3();
+                                } catch (Exception c) {
+                                    try {
+                                        runLinux_P();
+                                    } catch (Exception p) {
+                                        System.out.println("Something went wrong...");
+                                    }
+                                }
+                            }
+                        }
                     } catch (IOException e) {
                         System.out.println("INVALID WRITE --> TRY AGAIN LATER");
                     }
