@@ -113,7 +113,10 @@ class StressTester extends JFrame {
                             else
                                 System.out.println(run("cmd.exe", "/c", "python3 test.py"));
                         } else if (isUnix()) {
-                            //
+                            if (run("bash", "-c", "python --version").contains("Python 3"))
+                                System.out.println(run("bash", "-c", "python test.py"));
+                            else
+                                System.out.println(run("bash", "-c", "python3 test.py"));
                         } else {
                             System.out.println("Not supported operating system.");
                         }
