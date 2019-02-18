@@ -14,59 +14,20 @@ import java.awt.event.*;
 
 class StressTester extends JFrame {
     private String path = "";
+    private static String OS = System.getProperty("os.name").toLowerCase();
 
-    private static String runWin_P3() throws IOException {
-        String str = "";
-        ProcessBuilder builder = new ProcessBuilder(
-            "cmd.exe", "/c", "python3 test.py");
-        builder.redirectErrorStream(false);
-        Process p = builder.start();
-        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while (true) {
-            line = r.readLine();
-            if (line == null) {break;}
-            str += line;
-        }
-        return str;
+    private static boolean isWindows() {
+        return (OS.indexOf("win") >= 0);
     }
 
-    private static String runLinux_P3() throws IOException {
-        String str = "";
-        ProcessBuilder builder = new ProcessBuilder(
-            "bash", "-c", "python3 test.py");
-        builder.redirectErrorStream(false);
-        Process p = builder.start();
-        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while (true) {
-            line = r.readLine();
-            if (line == null) {break;}
-            str += line;
-        }
-        return str;
+    private static boolean isUnix() {
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
     }
 
-    private static String runWin_P() throws IOException {
+    private static String run(String start, String arg, String cmd) throws IOException {
         String str = "";
         ProcessBuilder builder = new ProcessBuilder(
-            "cmd.exe", "/c", "python test.py");
-        builder.redirectErrorStream(false);
-        Process p = builder.start();
-        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while (true) {
-            line = r.readLine();
-            if (line == null) {break;}
-            str += line;
-        }
-        return str;
-    }
-
-    private static String runLinux_P() throws IOException {
-        String str = "";
-        ProcessBuilder builder = new ProcessBuilder(
-            "bash", "-c", "python test.py");
+            start , arg, cmd);
         builder.redirectErrorStream(false);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -146,19 +107,15 @@ class StressTester extends JFrame {
                         Files.write(file, lines, Charset.forName("UTF-8"));
 
                         // Run Python3 please...
-                        try {
-                            String out = runWin_P3();
-                            if (out.contains("'python3'")) {
-                                throw new Exception("Oops");
-                            } else {
-                                System.out.println(out);
-                            }
-                        } catch (Exception a) {
-                            try {
-                                System.out.println(runWin_P());
-                            } catch (Exception b) {
-                                //
-                            }
+                        if (isWindows()) {
+                            if (run("cmd.exe", "/c", "python --version").contains("Python3"))
+                                System.out.println(run("cmd.exe", "/c", "python test.py"));
+                            else
+                                System.out.println(run("cmd.exe", "/c", "python3 test.py"));
+                        } else if (isUnix()) {
+                            //
+                        } else {
+                            System.out.println("Not supported operating system.");
                         }
                     } catch (IOException e) {
                         System.out.println("INVALID WRITE --> TRY AGAIN LATER");
