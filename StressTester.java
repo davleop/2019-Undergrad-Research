@@ -15,60 +15,68 @@ import java.awt.event.*;
 class StressTester extends JFrame {
     private String path = "";
 
-    private static void runWin_P3() throws IOException {
+    private static String runWin_P3() throws IOException {
+        String str = "";
         ProcessBuilder builder = new ProcessBuilder(
             "cmd.exe", "/c", "python3 test.py");
-        builder.redirectErrorStream(true);
+        builder.redirectErrorStream(false);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while (true) {
             line = r.readLine();
             if (line == null) {break;}
-            System.out.println(line);
+            str += line;
         }
+        return str;
     }
 
-    private static void runLinux_P3() throws IOException {
+    private static String runLinux_P3() throws IOException {
+        String str = "";
         ProcessBuilder builder = new ProcessBuilder(
             "bash", "-c", "python3 test.py");
-        builder.redirectErrorStream(true);
+        builder.redirectErrorStream(false);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while (true) {
             line = r.readLine();
             if (line == null) {break;}
-            System.out.println(line);
+            str += line;
         }
+        return str;
     }
 
-    private static void runWin_P() throws IOException {
+    private static String runWin_P() throws IOException {
+        String str = "";
         ProcessBuilder builder = new ProcessBuilder(
             "cmd.exe", "/c", "python test.py");
-        builder.redirectErrorStream(true);
+        builder.redirectErrorStream(false);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while (true) {
             line = r.readLine();
             if (line == null) {break;}
-            System.out.println(line);
+            str += line;
         }
+        return str;
     }
 
-    private static void runLinux_P() throws IOException {
+    private static String runLinux_P() throws IOException {
+        String str = "";
         ProcessBuilder builder = new ProcessBuilder(
             "bash", "-c", "python test.py");
-        builder.redirectErrorStream(true);
+        builder.redirectErrorStream(false);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while (true) {
             line = r.readLine();
             if (line == null) {break;}
-            System.out.println(line);
+            str += line;
         }
+        return str;
     }
 
     private static boolean popup() {
@@ -139,20 +147,12 @@ class StressTester extends JFrame {
 
                         // Run Python3 please...
                         try {
-                            runWin_P3();
-                        } catch (Exception e) {
+                            System.out.println(runWin_P3());
+                        } catch (Exception a) {
                             try {
-                                runWin_P();
-                            } catch (Exception x) {
-                                try {
-                                    runLinux_P3();
-                                } catch (Exception c) {
-                                    try {
-                                        runLinux_P();
-                                    } catch (Exception p) {
-                                        System.out.println("Something went wrong...");
-                                    }
-                                }
+                                System.out.println(runWin_P());
+                            } catch (Exception b) {
+                                //
                             }
                         }
                     } catch (IOException e) {
