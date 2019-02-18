@@ -108,7 +108,7 @@ class StressTester extends JFrame {
 
                         // Run Python3 please...
                         if (isWindows()) {
-                            if (run("cmd.exe", "/c", "python --version").contains("Python3"))
+                            if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
                                 System.out.println(run("cmd.exe", "/c", "python test.py"));
                             else
                                 System.out.println(run("cmd.exe", "/c", "python3 test.py"));
