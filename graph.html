@@ -4,16 +4,19 @@
     <script type="text/javascript" src="jquery.csv.js"></script>
     <script src="jquery-3.2.1.js"
     <script type="text/javascript">
-            google.charts.load('current', {'packages':['line']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', {'packages':['line']});
+    google.charts.setOnLoadCallback(drawChart);
 
-      console.log(111);
+    var $ = require("jquery-3.2.1.js");
+
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      var $ = require("jquery-3.2.1.js");
-      require("jquery.csv.js");
-      var csvFile = $.csv.toArrays("data.csv");
+
+      $.get("data.csv");
+
+      var csvFile = $.csv.toArrays("data.csv")
+
       data.addColumn('number', 'Day');
       data.addColumn('number', 'SSD');
       data.addColumn('number', 'HDD');
@@ -21,12 +24,12 @@
       data.addColumn('number', 'Chromebook')
 
       data.addRows(csvFile);
-      var subtitle = csvFile.toString();
+      var sub = csvFile.toString();
 
       var options = {
         chart: {
           title: 'Box Office Earnings in First Two Weeks of Opening',
-          subtitle: 'subtitle'
+          subtitle: sub
         },
         width: 900,
         height: 500
