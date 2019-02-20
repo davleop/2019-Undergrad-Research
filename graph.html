@@ -13,8 +13,6 @@
 
       var data = new google.visualization.DataTable();
 
-      $.get("data.csv");
-
       var csvFile = $.csv.toArrays("data.csv")
 
       data.addColumn('number', 'Day');
@@ -29,7 +27,7 @@
       var options = {
         chart: {
           title: 'Box Office Earnings in First Two Weeks of Opening',
-          subtitle: sub
+          subtitle: ''su''b
         },
         width: 900,
         height: 500
