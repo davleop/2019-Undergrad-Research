@@ -2,6 +2,12 @@ all:
 			cls
 			javac -Xdiags:verbose StressTester.java
 			java StressTester
+go:
+			cls
+			python Python/go.py
+go3:
+			cls
+			python3 Python/go.py
 py:
 			cls
 			python Python/runner.py

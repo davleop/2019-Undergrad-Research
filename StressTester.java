@@ -17,6 +17,26 @@ class StressTester extends JFrame {
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run = "Python/go.py";
 
+    private static void runPython() {
+        try {
+            if (isWindows()) {
+                if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
+                    System.out.println(run("cmd.exe", "/c", "python " + file_to_run));
+                else
+                    System.out.println(run("cmd.exe", "/c", "python3 " + file_to_run));
+            } else if (isUnix()) {
+                if (run("bash", "-c", "python --version").contains("Python 3"))
+                    System.out.println(run("bash", "-c", "python " + file_to_run));
+                else
+                    System.out.println(run("bash", "-c", "python3 " + file_to_run));
+            } else {
+                System.out.println("Not supported operating system.");
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong while running Python 3 ...");
+        }
+    }
+
     private static boolean isWindows() {
         return (OS.indexOf("win") >= 0);
     }
@@ -95,37 +115,49 @@ class StressTester extends JFrame {
 
                 Path file = Paths.get("filepath.txt");
 
-                if (Files.exists(Paths.get(string)) && !(string.toLowerCase().contains("c:\\"))) {
-                    try {
-                        // Disable things so that the process isn't screwed up...
-                        start.setEnabled(false);
-                        exit.setEnabled(false);
-                        stop.setEnabled(true);
-                        filepath.setEditable(false);
-                        
-                        // Save to file so that the Python program can know where to go...
-                        List<String> lines = Arrays.asList(string);
-                        Files.write(file, lines, Charset.forName("UTF-8"));
+                if (isWindows()) {
+                    if (Files.exists(Paths.get(string)) && !(string.toLowerCase().contains("c:\\")) && (string.toLowerCase().contains(":\\"))) {
+                        try {
+                            // Disable things so that the process isn't screwed up...
+                            start.setEnabled(false);
+                            exit.setEnabled(false);
+                            stop.setEnabled(true);
+                            filepath.setEditable(false);
+                            
+                            // Save to file so that the Python program can know where to go...
+                            List<String> lines = Arrays.asList(string);
+                            Files.write(file, lines, Charset.forName("UTF-8"));
 
                             // Run Python3 please...
-                          if (isWindows()) {
-                              if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
-                                  System.out.println(run("cmd.exe", "/c", "python " + file_to_run));
-                              else
-                                  System.out.println(run("cmd.exe", "/c", "python3 " + file_to_run));
-                          } else if (isUnix()) {
-                              if (run("bash", "-c", "python --version").contains("Python 3"))
-                                  System.out.println(run("bash", "-c", "python " + file_to_run));
-                              else
-                                  System.out.println(run("bash", "-c", "python3 " + file_to_run));
-                          } else {
-                              System.out.println("Not supported operating system.");
-                          }
-                      } catch (IOException e) {
-                        System.out.println("INVALID WRITE --> TRY AGAIN LATER");
+                            runPython();
+                        } catch (IOException e) {
+                            System.out.println("INVALID WRITE --> TRY AGAIN LATER");
+                        }
+                    } else {
+                        invalidPath();
                     }
-                } else {
-                    invalidPath();
+                } else if (isUnix()) {
+                    // TODO (David): Fix Linux path checking.
+                   if (Files.exists(Paths.get(string))) {
+                        try {
+                            // Disable things so that the process isn't screwed up...
+                            start.setEnabled(false);
+                            exit.setEnabled(false);
+                            stop.setEnabled(true);
+                            filepath.setEditable(false);
+                            
+                            // Save to file so that the Python program can know where to go...
+                            List<String> lines = Arrays.asList(string);
+                            Files.write(file, lines, Charset.forName("UTF-8"));
+
+                            // Run Python3 please...
+                            runPython();
+                        } catch (IOException e) {
+                            System.out.println("INVALID WRITE --> TRY AGAIN LATER");
+                        }
+                    } else {
+                        invalidPath();
+                    } 
                 }
             }
         });
