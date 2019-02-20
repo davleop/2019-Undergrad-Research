@@ -15,7 +15,7 @@ import java.awt.event.*;
 class StressTester extends JFrame {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
-    private final static String file_to_run = "Python/test.py";
+    private final static String file_to_run = "Python/go.py";
 
     private static boolean isWindows() {
         return (OS.indexOf("win") >= 0);
