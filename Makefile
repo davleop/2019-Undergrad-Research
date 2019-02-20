@@ -4,10 +4,10 @@ all:
 			java StressTester
 py:
 			cls
-			python runner.py
+			python Python/runner.py
 py3:
 			cls
-			python3 runner.py
+			python3 Python/runner.py
 run_write3:
 			cls
 			python3 stress_by_write_test.py

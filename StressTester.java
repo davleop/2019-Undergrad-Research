@@ -15,7 +15,7 @@ import java.awt.event.*;
 class StressTester extends JFrame {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
-    private final static String file_to_run = "test.py";
+    private final static String file_to_run = "Python/test.py";
 
     private static boolean isWindows() {
         return (OS.indexOf("win") >= 0);
@@ -95,7 +95,7 @@ class StressTester extends JFrame {
 
                 Path file = Paths.get("filepath.txt");
 
-                if (Files.exists(Paths.get(string))) {
+                if (Files.exists(Paths.get(string)) && !(string.toLowerCase().contains("c:\\"))) {
                     try {
                         // Disable things so that the process isn't screwed up...
                         start.setEnabled(false);
@@ -107,21 +107,21 @@ class StressTester extends JFrame {
                         List<String> lines = Arrays.asList(string);
                         Files.write(file, lines, Charset.forName("UTF-8"));
 
-                        // Run Python3 please...
-                        if (isWindows()) {
-                            if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
-                                System.out.println(run("cmd.exe", "/c", "python " + file_to_run));
-                            else
-                                System.out.println(run("cmd.exe", "/c", "python3 " + file_to_run));
-                        } else if (isUnix()) {
-                            if (run("bash", "-c", "python --version").contains("Python 3"))
-                                System.out.println(run("bash", "-c", "python " + file_to_run));
-                            else
-                                System.out.println(run("bash", "-c", "python3 " + file_to_run));
-                        } else {
-                            System.out.println("Not supported operating system.");
-                        }
-                    } catch (IOException e) {
+                            // Run Python3 please...
+                          if (isWindows()) {
+                              if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
+                                  System.out.println(run("cmd.exe", "/c", "python " + file_to_run));
+                              else
+                                  System.out.println(run("cmd.exe", "/c", "python3 " + file_to_run));
+                          } else if (isUnix()) {
+                              if (run("bash", "-c", "python --version").contains("Python 3"))
+                                  System.out.println(run("bash", "-c", "python " + file_to_run));
+                              else
+                                  System.out.println(run("bash", "-c", "python3 " + file_to_run));
+                          } else {
+                              System.out.println("Not supported operating system.");
+                          }
+                      } catch (IOException e) {
                         System.out.println("INVALID WRITE --> TRY AGAIN LATER");
                     }
                 } else {
