@@ -11,25 +11,26 @@
       // TODO (Aaron): Make the graph up to date with the new format specs
       //               SSD Write, SSD Append, HDD Write, HDD Append, etc
       data.addColumn('number', 'Day'); // TODO (someone): make take the unit for x-axis
-      data.addColumn('number', 'SSD');
-      data.addColumn('number', 'HDD');
-      data.addColumn('number', 'Flashdrive');
-      data.addColumn('number', 'Chromebook');
+      data.addColumn('number', 'SSD Write');
+      data.addColumn('number', 'SSD Append');
+      data.addColumn('number', 'HDD Write');
+      data.addColumn('number', 'HDD Append');
+      data.addColumn('number', 'Flashdrive Write');
+      data.addColumn('number', 'Flashdrive Append');
+      data.addColumn('number', 'Chromebook Write');
+      data.addColumn('number', 'Chromebook Append');
 
       let opz = [
-          [1,2,3,3,7],
-          [1,2,5,123,1],
-          [6,21,1,16,7],
-          [12,5,7,8,1],
-          [15,17,234,86,23]
+          [1,1,2,3,4,5,6,7,8],
+          [2,2,3,4,5,6,7,8,9]
         ]
 
       data.addRows(opz);
 
       var options = {
         chart: {
-          title: 'CHANGE ME',
-          subtitle: 'THIS IS A SUB'
+          title: 'Power of Storage Drives Over Time',
+          subtitle: 'in '
         },
         width: 900,
         height: 500
