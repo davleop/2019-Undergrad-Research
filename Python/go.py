@@ -7,7 +7,7 @@ from datetime import datetime
 '''
 CSV file output is such:
 [
-	[Day, SSD, HDD, Flashdrive, Chromebook],
+	[Day, Write Average, Append Average],
 	[...],
 	...
 ]
@@ -31,7 +31,19 @@ DAYS = calc_days() # TODO (ALL): CHANGE START FILE TO DATE THAT YOU START
 
 def main():
 	# Run the test
+	runner = Runner()
+	runner.go(5)
 	# make a csv file
+
+	wR = runner.writeRand
+	wS = runner.writeSameChar
+	aR = runner.appendRand
+	aS = runner.appendSameChar
+
+	write_avg  = (wR + wS) / 2.
+	append_avg = (aR + aS) / 2.
+
+	write([DAYS, write_avg, append_avg])
 
 if __name__ == '__main__':
 	main()

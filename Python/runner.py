@@ -3,9 +3,9 @@ from stress_by_append_test import append
 
 class Runner():
 	'''
-	Runner is a class in order to execute the stress testing scripts made in Python.
+	Runner is a class in order to execute the stress testing scripts.
 	This file will be called by "go.py" which will the be file called on by 
-	"StressTester.java"
+	"StressTester.java" that is running the GUI.
 	'''
 	def __init__(self, filepath=open("./filepath.txt", 'r').readline().strip()):
 		self.__filepath             = filepath
@@ -13,6 +13,10 @@ class Runner():
 		self.__writePassesSameChar  = 0 
 		self.__appendPassesRandom   = 0
 		self.__appendPassesSameChar = 0
+
+	@property
+	def filepath(self):
+		return self.__filepath
 
 	@property
 	def writeRand(self):
@@ -36,9 +40,9 @@ class Runner():
 		except IOError:
 			print ("Something went wrong in Write Stress Test...")
 
-	def __writeSameChar(self, seconds=900):
+	def __writeSameChar(self, seconds=900, char="A"):
 		try:
-			tmp, self.__writePassesSameChar = writer("A", self.__filepath, seconds)
+			tmp, self.__writePassesSameChar = writer(char, self.__filepath, seconds)
 		except IOError:
 			print ("Something went wrong in Write Stress Test...")
 
@@ -48,9 +52,9 @@ class Runner():
 		except IOError:
 			print ("Something went wrong in Append Stress Test...")
 	
-	def __appendSameChar(self, seconds=900):
+	def __appendSameChar(self, seconds=900, char="A"):
 		try:
-			tmp, self.__appendPassesSameChar = append("A", self.__filepath, seconds)
+			tmp, self.__appendPassesSameChar = append(char, self.__filepath, seconds)
 		except IOError:
 			print ("Something went wrong in Append Stress Test...")
 
