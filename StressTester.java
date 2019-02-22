@@ -11,24 +11,80 @@ import java.nio.file.Paths;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.awt.event.*;
+import java.text.*;
 
-class StressTester extends JFrame {
+class StressTester extends JFrame implements ActionListener {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run = "Python/go.py";
+    private int timeLeft = 20000;//3599999;
+    private JLabel label = new JLabel("");
+    private Timer timer = new Timer(1000, this);
+    private JButton start = new JButton("Start");
+    private JButton stop  = new JButton("Stop");
+    private JButton exit  = new JButton("Exit");
+    private JTextField filepath = new JTextField(12);
+    private Thread thread2;
 
-    private static void runPython() {
+    public void actionPerformed(ActionEvent e) {
+        timeLeft -= 1000;
+        SimpleDateFormat df = new SimpleDateFormat("mm:ss");
+        label.setText(df.format(timeLeft));
+        if (timeLeft <= 0){
+            start.setEnabled(true);
+            stop.setEnabled(false);
+            exit.setEnabled(true);
+            filepath.setEditable(true);
+            timer.stop();
+        }
+    }
+
+    private void runPython() {
         try {
             if (isWindows()) {
-                if (run("cmd.exe", "/c", "python --version").contains("Python 3"))
-                    System.out.println(run("cmd.exe", "/c", "python " + file_to_run));
-                else
-                    System.out.println(run("cmd.exe", "/c", "python3 " + file_to_run));
+                if (go("cmd.exe", "/c", "python --version").contains("Python 3")) {
+                    thread2 = new Thread() {
+                        public void run() {
+                            try {
+                                go("cmd.exe", "/c", "python " + file_to_run);
+                            } catch (IOException o) {
+                                System.out.println("Failed to execute Python");
+                            }
+                        }
+                    };
+                } else {
+                    thread2 = new Thread() {
+                        public void run() {
+                            try {
+                                go("cmd.exe", "/c", "python3 " + file_to_run);
+                            } catch (IOException o) {
+                                System.out.println("Failed to execute Python");
+                            }
+                        }
+                    };
+                }
             } else if (isUnix()) {
-                if (run("bash", "-c", "python --version").contains("Python 3"))
-                    System.out.println(run("bash", "-c", "python " + file_to_run));
-                else
-                    System.out.println(run("bash", "-c", "python3 " + file_to_run));
+                if (go("bash", "-c", "python --version").contains("Python 3")) {
+                    thread2 = new Thread() {
+                        public void run() {
+                            try {
+                                go("bash", "-c", "python " + file_to_run);
+                            } catch (IOException o) {
+                                System.out.println("Failed to execute Python");
+                            }
+                        }
+                    };
+                } else {
+                    thread2 = new Thread() {
+                        public void run() {
+                            try {
+                                go("bash", "-c", "python3 " + file_to_run);
+                            } catch (IOException o) {
+                                System.out.println("Failed to execute Python");
+                            }
+                        }
+                    };
+                }
             } else {
                 System.out.println("Not supported operating system.");
             }
@@ -45,7 +101,8 @@ class StressTester extends JFrame {
         return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
     }
 
-    private static String run(String start, String arg, String cmd) throws IOException {
+
+    private static String go(String start, String arg, String cmd) throws IOException {
         String str = "";
         ProcessBuilder builder = new ProcessBuilder(
             start , arg, cmd);
@@ -90,10 +147,6 @@ class StressTester extends JFrame {
         ImageIcon img = new ImageIcon("pic.png");
         this.setIconImage(img.getImage());
 
-        JButton start = new JButton("Start");
-        JButton stop  = new JButton("Stop");
-        JButton exit  = new JButton("Exit");
-
         stop.setEnabled(false);
 
         JPanel buttonPanel = new JPanel();
@@ -103,7 +156,6 @@ class StressTester extends JFrame {
 
         JLabel filepath_label = new JLabel("Filepath to be tested on:");
         filepath_label.setHorizontalAlignment(SwingConstants.LEFT);
-        JTextField filepath = new JTextField(12);
 
         JPanel filePanel = new JPanel();
         filePanel.add(filepath_label);
@@ -128,8 +180,24 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            // Run Python3 please...
+                            Thread thread1 = new Thread() {
+                                public void run() {
+                                    timer.setInitialDelay(10000); // 10 Second delay to ensure threads start
+                                    timer.start();
+                                }
+                            };
+
                             runPython();
+
+                            try {
+                                thread2.join();
+                                thread1.join();
+                            } catch (Exception ex) {
+                                System.out.println("Threads failed to join...");
+                            }
+                            thread1.start();
+                            thread2.start();
+
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
                         }
@@ -150,8 +218,24 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            // Run Python3 please...
+                            Thread thread1 = new Thread() {
+                                public void run() {
+                                    timer.setInitialDelay(10000); // 10 Second delay to ensure threads start
+                                    timer.start();
+                                }
+                            };
+
                             runPython();
+
+                            try {
+                                thread2.join();
+                                thread1.join();
+                            } catch (Exception ex) {
+                                System.out.println("Threads failed to join...");
+                            }
+                            thread1.start();
+                            thread2.start();
+
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
                         }
@@ -170,6 +254,8 @@ class StressTester extends JFrame {
                     stop.setEnabled(false);
                     filepath.setEditable(true);
                     exit.setEnabled(true);
+                    timer.stop();
+                    timeLeft = 20000;
                     // TODO(David): add kill process and clean up data...
                 }
             }
@@ -186,7 +272,8 @@ class StressTester extends JFrame {
             }
         });
 
-        add(BorderLayout.CENTER, buttonPanel);
+        add(BorderLayout.NORTH, buttonPanel);
+        add(BorderLayout.CENTER, label);
         add(BorderLayout.SOUTH, filePanel);
     }
 
@@ -195,7 +282,7 @@ class StressTester extends JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.pack();
-        frame.setSize(350,150);
+        frame.setSize(400,175);
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, 
             dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);

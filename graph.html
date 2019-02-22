@@ -8,9 +8,8 @@
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      // TODO (Aaron): Make the graph up to date with the new format specs
-      //               SSD Write, SSD Append, HDD Write, HDD Append, etc
-      data.addColumn('number', 'Day'); // TODO (someone): make take the unit for x-axis
+
+      data.addColumn('number', 'Day');
       data.addColumn('number', 'SSD Write');
       data.addColumn('number', 'SSD Append');
       data.addColumn('number', 'HDD Write');
