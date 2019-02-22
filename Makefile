@@ -32,3 +32,5 @@ run_write:
 clean:
 			rm -rf *.class
 			rm filepath.txt
+			rm -rf Python/__pycache__
+			rm readme.txt
