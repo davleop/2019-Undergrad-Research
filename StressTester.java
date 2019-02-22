@@ -3,6 +3,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ class StressTester extends JFrame implements ActionListener {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run = "Python/go.py";
-    private int timeLeft = 20000;//3599999;
+    private int timeLeft = 20000;//3600000;
     private JLabel label = new JLabel("");
     private Timer timer = new Timer(1000, this);
     private JButton start = new JButton("Start");
@@ -36,6 +37,11 @@ class StressTester extends JFrame implements ActionListener {
             exit.setEnabled(true);
             filepath.setEditable(true);
             timer.stop();
+            try {
+                results();
+            } catch (FileNotFoundException f) {
+                System.out.println("File is not found...");
+            }
         }
     }
 
@@ -139,12 +145,62 @@ class StressTester extends JFrame implements ActionListener {
          JOptionPane.ERROR_MESSAGE);
     }
 
+    public static void results() throws FileNotFoundException {
+        JFrame yay = new JFrame("RESULTS");
+        yay.getContentPane().setLayout(new GridLayout(3,3));
+
+        ImageIcon img = new ImageIcon("check.png");
+        yay.setIconImage(img.getImage());
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        yay.pack();
+        yay.setSize(300,150);
+        yay.setLocation(dim.width / 2 - yay.getSize().width / 2, 
+            dim.height / 2 - yay.getSize().height / 2);
+        
+        yay.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        yay.setResizable(false);
+
+        String lines[] = new String[3];
+
+        File file = new File("readme.txt");
+        Scanner s = new Scanner(file);
+
+        lines[0] = s.next();
+        lines[1] = s.next();
+        lines[2] = s.next();
+
+        JButton button = new JButton("OK");
+
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                boolean response = popup();
+                if (response){
+                    yay.dispose();
+                } else {
+                    // do nothing
+                }
+            }
+        });
+
+        JLabel one = new JLabel("DAY: " + lines[0]);
+        JLabel two = new JLabel("WRITE: " + lines[1]);
+        JLabel thr = new JLabel("APPEND: " + lines[2]);
+
+        yay.add(one);
+        yay.add(two);
+        yay.add(thr);
+        yay.add(button);
+
+        yay.setVisible(true);
+    }
+
     public StressTester() {
         this.setTitle("Stress Tester");
         this.getContentPane().setLayout(new FlowLayout());
 
         // set application icon
-        ImageIcon img = new ImageIcon("pic.png");
+        ImageIcon img = new ImageIcon("WT.png");
         this.setIconImage(img.getImage());
 
         stop.setEnabled(false);
@@ -182,7 +238,7 @@ class StressTester extends JFrame implements ActionListener {
 
                             Thread thread1 = new Thread() {
                                 public void run() {
-                                    timer.setInitialDelay(10000); // 10 Second delay to ensure threads start
+                                    timer.setInitialDelay(5000); // 10 Second delay to ensure threads start
                                     timer.start();
                                 }
                             };
@@ -282,7 +338,7 @@ class StressTester extends JFrame implements ActionListener {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.pack();
-        frame.setSize(400,175);
+        frame.setSize(300,150);
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, 
             dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
