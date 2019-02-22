@@ -36,7 +36,7 @@ DAYS = calc_days() # TODO (ALL): CHANGE START FILE TO DATE THAT YOU START
 def main():
 	# Run the test
 	runner = Runner()
-	runner.go(5)
+	runner.go()
 	# make a csv file
 
 	wR = runner.writeRand
