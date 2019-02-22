@@ -4,7 +4,7 @@ from os.path import isfile
 from datetime import datetime
 
 '''
-CSV file output is such:
+File output is such:
 [
 	[Day, Write Average, Append Average],
 	[...],
@@ -31,12 +31,11 @@ def calc_days():
 	delta = d1 - d0
 	return delta.days
 
-DAYS = calc_days() # TODO (ALL): CHANGE START FILE TO DATE THAT YOU START
 
 def main():
 	# Run the test
 	runner = Runner()
-	runner.go()
+	runner.go(5)
 	# make a csv file
 
 	wR = runner.writeRand
@@ -47,6 +46,8 @@ def main():
 	write_avg  = (wR + wS) / 2.
 	append_avg = (aR + aS) / 2.
 
+	DAYS = calc_days() # TODO (ALL): CHANGE START FILE TO DATE THAT YOU START
+	
 	write(DAYS, write_avg, append_avg)
 
 	print ("Done.")
