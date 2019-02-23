@@ -3,7 +3,7 @@ import random
 import string
 from remove_file import remove
 
-def append(choice=random.choice(string.printable), filepath="./", seconds=900):
+def append(choice="", filepath="./", seconds=600):
 	'''
 	Returns a tuple of (elapsed time, passes)
 	This will go on for 15 minutes or 900 seconds
@@ -16,6 +16,10 @@ def append(choice=random.choice(string.printable), filepath="./", seconds=900):
 
 	j = 0
 	while end - start < seconds:
+		if choice != "":
+			pass
+		else:
+			choice = random.choice(string.printable)
 		f = open(cat, 'a')
 		try:
 			f.write(choice * ((2 ** 20) * 100)) # 100 Mb

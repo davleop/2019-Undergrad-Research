@@ -16,7 +16,7 @@ class StressTester extends JFrame implements ActionListener {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run = "Python/go.py";
-    private int timeLeft = 20000;//3600000;
+    private int timeLeft = 30000;//3600000;
     private JLabel label = new JLabel("");
     private Timer timer = new Timer(1000, this);
     private JButton start = new JButton("Start");
@@ -145,7 +145,7 @@ class StressTester extends JFrame implements ActionListener {
 
     public static void results() throws FileNotFoundException {
         JFrame yay = new JFrame("RESULTS");
-        yay.getContentPane().setLayout(new GridLayout(3,3));
+        yay.getContentPane().setLayout(new GridLayout(5,5));
 
         ImageIcon img = new ImageIcon("check.png");
         yay.setIconImage(img.getImage());
@@ -159,7 +159,7 @@ class StressTester extends JFrame implements ActionListener {
         yay.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         yay.setResizable(false);
 
-        String lines[] = new String[3];
+        String lines[] = new String[5];
 
         File file = new File("readme.txt");
         Scanner s = new Scanner(file);
@@ -167,6 +167,8 @@ class StressTester extends JFrame implements ActionListener {
         lines[0] = s.next();
         lines[1] = s.next();
         lines[2] = s.next();
+        lines[3] = s.next();
+        lines[4] = s.next();
 
         JButton button = new JButton("OK");
 
@@ -184,10 +186,14 @@ class StressTester extends JFrame implements ActionListener {
         JLabel one = new JLabel("DAY: " + lines[0]);
         JLabel two = new JLabel("WRITE: " + lines[1]);
         JLabel thr = new JLabel("APPEND: " + lines[2]);
+        JLabel fou = new JLabel("LARGE WRITE: " + lines[3]);
+        JLabel fiv = new JLabel("READ: " + lines[4]);
 
         yay.add(one);
         yay.add(two);
         yay.add(thr);
+        yay.add(fou);
+        yay.add(fiv);
         yay.add(button);
 
         yay.setVisible(true);
@@ -236,7 +242,7 @@ class StressTester extends JFrame implements ActionListener {
 
                             Thread thread1 = new Thread() {
                                 public void run() {
-                                    timer.setInitialDelay(5000); // 10 Second delay to ensure threads start
+                                    timer.setInitialDelay(10000); // 10 Second delay to ensure threads start
                                     timer.start();
                                 }
                             };
@@ -309,7 +315,7 @@ class StressTester extends JFrame implements ActionListener {
                     filepath.setEditable(true);
                     exit.setEnabled(true);
                     timer.stop();
-                    timeLeft = 20000;
+                    timeLeft = 30000;
                     // TODO(David): add kill process and clean up data...
                 }
             }
