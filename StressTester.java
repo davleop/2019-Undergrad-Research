@@ -16,7 +16,7 @@ class StressTester extends JFrame implements ActionListener {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run = "Python/go.py";
-    private int timeLeft = 30000;//3600000;
+    private int timeLeft = 3600000;
     private JLabel label = new JLabel("");
     private Timer timer = new Timer(1000, this);
     private JButton start = new JButton("Start");

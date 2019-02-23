@@ -35,7 +35,7 @@ def calc_days():
 def main():
 	# Run the test
 	runner = Runner()
-	runner.go(5)
+	runner.go()
 	# make a csv file
 
 	wR = runner.writeRand
