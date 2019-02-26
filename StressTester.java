@@ -142,7 +142,7 @@ class StressTester extends JFrame implements ActionListener {
     }
 
     private static boolean isUnix() {
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >= 0 );
     }
 
 
@@ -184,20 +184,20 @@ class StressTester extends JFrame implements ActionListener {
     }
 
     public static void results() throws FileNotFoundException {
-        JFrame yay = new JFrame("RESULTS");
-        yay.getContentPane().setLayout(new GridLayout(5,5));
+        JFrame results = new JFrame("RESULTS");
+        results.getContentPane().setLayout(new GridLayout(5,5));
 
         ImageIcon img = new ImageIcon("check.png");
-        yay.setIconImage(img.getImage());
+        results.setIconImage(img.getImage());
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        yay.pack();
-        yay.setSize(350,150);
-        yay.setLocation(dim.width / 2 - yay.getSize().width / 2, 
-            dim.height / 2 - yay.getSize().height / 2);
+        results.pack();
+        results.setSize(350,150);
+        results.setLocation(dim.width / 2 - results.getSize().width / 2, 
+            dim.height / 2 - results.getSize().height / 2);
         
-        yay.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        yay.setResizable(false);
+        results.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        results.setResizable(false);
 
         String lines[] = new String[5];
 
@@ -216,7 +216,7 @@ class StressTester extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent ae) {
                 boolean response = popup();
                 if (response){
-                    yay.dispose();
+                    results.dispose();
                 } else {
                     // do nothing
                 }
@@ -229,14 +229,14 @@ class StressTester extends JFrame implements ActionListener {
         JLabel fou = new JLabel("LARGE WRITE: " + lines[3]);
         JLabel fiv = new JLabel("READ: " + lines[4]);
 
-        yay.add(one);
-        yay.add(two);
-        yay.add(thr);
-        yay.add(fou);
-        yay.add(fiv);
-        yay.add(button);
+        results.add(one);
+        results.add(two);
+        results.add(thr);
+        results.add(fou);
+        results.add(fiv);
+        results.add(button);
 
-        yay.setVisible(true);
+        results.setVisible(true);
     }
 
     public StressTester() {
