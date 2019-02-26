@@ -15,14 +15,15 @@ import java.text.*;
 class StressTester extends JFrame implements ActionListener {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
-    private final static String file_to_run = "Python/go.py";
-    private int timeLeft = 3600000;
-    private JLabel label = new JLabel("");
-    private Timer timer = new Timer(1000, this);
-    private JButton start = new JButton("Start");
-    private JButton stop  = new JButton("Stop");
-    private JButton exit  = new JButton("Exit");
-    private JTextField filepath = new JTextField(12);
+    private final static String file_to_run   = "Python/go.py";
+    private final static String clean_up_file = "Python/cleanup.py";
+    private int timeLeft                      = 3600000;
+    private JLabel label                      = new JLabel("");
+    private Timer timer                       = new Timer(1000, this);
+    private JButton start                     = new JButton("Start");
+    private JButton stop                      = new JButton("Stop");
+    private JButton exit                      = new JButton("Exit");
+    private JTextField filepath               = new JTextField(12);
     private Thread thread2;
 
     public void actionPerformed(ActionEvent e) {
@@ -97,6 +98,45 @@ class StressTester extends JFrame implements ActionListener {
         }
     }
 
+    private void stopPython() {
+        try {
+            if (isWindows()) {
+                if (go("cmd.exe", "/c", "python --version").contains("Python 3")) {
+                    try {
+                        go("cmd.exe", "/c", "taskkill /IM python.exe /F && python " + clean_up_file);
+                        go("cmd.exe", "/c", "python " + clean_up_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to kill Python");
+                    }
+                } else {
+                    try {
+                        go("cmd.exe", "/c", "taskkill /IM python3.exe /F && python3 " + clean_up_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to kill Python");
+                    }
+                }
+            } else if (isUnix()) {
+                if (go("bash", "-c", "python --version").contains("Python 3")) {
+                    try {
+                        go("bash", "-c", "pkill python && python " + clean_up_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to kill Python");
+                    }
+                } else {
+                    try {
+                        go("bash", "-c", "pkill python && python3 " + clean_up_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to kill Python");
+                    }
+                }
+            } else {
+                System.out.println("Not supported operating system.");
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong while running Python 3 ...");
+        }
+    }
+
     private static boolean isWindows() {
         return (OS.indexOf("win") >= 0);
     }
@@ -110,7 +150,7 @@ class StressTester extends JFrame implements ActionListener {
         String str = "";
         ProcessBuilder builder = new ProcessBuilder(
             start , arg, cmd);
-        builder.redirectErrorStream(false);
+        builder.redirectErrorStream(true);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
@@ -309,6 +349,7 @@ class StressTester extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent ae) {
                 boolean response = popup();
                 if (response) {
+                    stopPython();
                     start.setEnabled(true);
                     stop.setEnabled(false);
                     filepath.setEditable(true);
@@ -316,7 +357,6 @@ class StressTester extends JFrame implements ActionListener {
                     timer.stop();
                     timeLeft = 3600000;
                     label.setText("");
-                    // TODO(David): add kill process and clean up data...
                 }
             }
         });
@@ -325,6 +365,7 @@ class StressTester extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent ae) {
                 boolean response = popup();
                 if (response) {
+                    stopPython();
                     setVisible(false);
                     dispose();
                 }
