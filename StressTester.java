@@ -314,7 +314,8 @@ class StressTester extends JFrame implements ActionListener {
                     filepath.setEditable(true);
                     exit.setEnabled(true);
                     timer.stop();
-                    timeLeft = 30000;
+                    timeLeft = 3600000;
+                    label.setText("");
                     // TODO(David): add kill process and clean up data...
                 }
             }
@@ -324,7 +325,6 @@ class StressTester extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent ae) {
                 boolean response = popup();
                 if (response) {
-                    // TODO(David): add kill process and clean up data...
                     setVisible(false);
                     dispose();
                 }
