@@ -14,7 +14,7 @@ def large_write(filepath="./", seconds=600):
 		f = open(cat, "ab")
 
 		try:
-			for i in range(256):
+			for i in range(512):
 				choice = random.choice(range(-0x80,0x80))
 				try:
 					f.write(struct.pack("b", choice))
