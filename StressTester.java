@@ -152,7 +152,7 @@ class StressTester extends JFrame implements ActionListener {
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         yay.pack();
-        yay.setSize(300,150);
+        yay.setSize(350,150);
         yay.setLocation(dim.width / 2 - yay.getSize().width / 2, 
             dim.height / 2 - yay.getSize().height / 2);
         
@@ -265,8 +265,7 @@ class StressTester extends JFrame implements ActionListener {
                         invalidPath();
                     }
                 } else if (isUnix()) {
-                    // TODO (David): Fix Linux path checking.
-                   if (Files.exists(Paths.get(string))) {
+                   if (Files.exists(Paths.get(string)) && (string.contains("/media")) || string.contains("/mnt")) {
                         try {
                             // Disable things so that the process isn't screwed up...
                             start.setEnabled(false);
@@ -342,7 +341,7 @@ class StressTester extends JFrame implements ActionListener {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         frame.pack();
-        frame.setSize(300,150);
+        frame.setSize(350,150);
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, 
             dim.height / 2 - frame.getSize().height / 2);
         frame.setVisible(true);
