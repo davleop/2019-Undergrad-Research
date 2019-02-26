@@ -6,7 +6,7 @@ from datetime import datetime
 '''
 File output is such:
 [
-	[Day, Write Average, Append Average],
+	[Day, Write Average, Append Average, Large Write, Read Test],
 	[...],
 	...
 ]
