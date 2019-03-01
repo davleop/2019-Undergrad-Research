@@ -7,7 +7,7 @@ def append(choice="", filepath="./", seconds=600):
 	'''
 	Returns a tuple of (elapsed time, passes)
 	This will go on for 15 minutes or 900 seconds
-	It writes 100 Mb at a time.
+	It writes 256 Mb at a time.
 	'''
 	start = time.time()
 	end   = time.time()
@@ -22,7 +22,7 @@ def append(choice="", filepath="./", seconds=600):
 			choice = random.choice(string.printable)
 		f = open(cat, 'a')
 		try:
-			f.write(choice * ((2 ** 20) * 100)) # 100 Mb
+			f.write(choice * ((2 ** 20) * 256)) # 256 Mb
 			f.close()
 		except:
 			f.close()

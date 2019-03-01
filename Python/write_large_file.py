@@ -11,17 +11,13 @@ def large_write(filepath="./", seconds=600):
 	j = 0
 	while end - start < seconds:
 
-		f = open(cat, "ab")
+		f = open(cat, "a")
 
+		choice = random.choice(range(-0x80,0x80))
 		try:
-			for i in range(512):
-				choice = random.choice(range(-0x80,0x80))
-				try:
-					f.write(struct.pack("b", choice))
-				except:
-					raise Exception("Oh no!")
+			f.write(choice * (2 ** 20) * 256)
 		except:
-			break
+			raise Exception("Oh no!")
 
 		j += 1
 		end = time.time()
