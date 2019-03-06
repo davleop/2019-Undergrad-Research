@@ -2,26 +2,15 @@ import time
 import string
 import random
 
-def large_write(filepath="./", seconds=600):
-	start  = time.time()
-	end    = time.time()
+def large_write(filepath="./"):
 
 	cat = filepath + "largeByte.txt"
 
 	j = 0
-	while end - start < seconds:
-		choice = random.choice(string.printable)
-		try:
-			f = open(cat, "a")
-			f.write(choice * ((2 ** 20) * 256)) # 256 Mb
-			f.close();
-			j += 1
-		except:
-			pass
-
-		end = time.time()
-
-	return (end - start, j)
+	choice = random.choice(string.printable)
+	f = open(cat, "a")
+	f.write(choice * ((2 ** 20) * 2000)) # 2 GB
+	f.close();
 
 def main():
 	print ("Large:")

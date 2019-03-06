@@ -15,7 +15,6 @@ class Runner():
 		self.__writePassesSameChar  = 0 
 		self.__appendPassesRandom   = 0
 		self.__appendPassesSameChar = 0
-		self.__writeLargeFile       = 0
 		self.__read_test            = 0
 
 	@property
@@ -37,10 +36,6 @@ class Runner():
 	@property
 	def appendSameChar(self):
 		return self.__writePassesRandom
-
-	@property
-	def largeWrite(self):
-		return self.__writeLargeFile
 
 	@property
 	def readTest(self):
@@ -70,17 +65,17 @@ class Runner():
 		except Exception:
 			print ("Something went wrong in Append Stress Test...")
 
-	def __largeWrite(self, seconds=600):
+	def __largeWrite(self):
 		try:
-			tmp, self.__writeLargeFile = large_write(self.__filepath, seconds)
+			large_write(self.__filepath)
 		except Exception:
-			print ("Something went wrong in Append Stress Test...")
+			print ("Something went wrong in Large Write Test...")
 
 	def __readTest(self, seconds=600):
 		try:
 			tmp, self.__read_test = read_test(self.__filepath, seconds)
 		except Exception:
-			print ("Something went wrong in Append Stress Test...")
+			print ("Something went wrong in Read Stress Test...")
 
 	def go(self, seconds=600):
 		print ("Doing write rand...")
@@ -92,7 +87,7 @@ class Runner():
 		print ("Doing append seq...")
 		self.__appendSameChar(seconds)
 		print ("Doing large write...")
-		self.__largeWrite(seconds)
+		self.__largeWrite()
 		print ("Reading...")
 		self.__readTest(seconds)
 		print ("Done.")
@@ -104,7 +99,6 @@ class Runner():
 		string += "Write passes with same character   : " + str(self.__writePassesSameChar)  + "\n"
 		string += "Append passes with same character  : " + str(self.__appendPassesSameChar) + "\n"
 		string += "\n"
-		string += "Large write passes                 : " + str(self.__writeLargeFile)       + "\n"
 		string += "Read test passes                   : " + str(self.__read_test)            + "\n"
 		return string
 
