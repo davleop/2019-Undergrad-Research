@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ class StressTester extends JFrame implements ActionListener {
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run   = "Python/go.py";
     private final static String clean_up_file = "Python/cleanup.py";
-    private int timeLeft                      = 4140000;//3600000;
+    private int timeLeft                     = 4140000;//3600000;
     private JLabel label                      = new JLabel("");
     private Timer timer                       = new Timer(1000, this);
     private JButton start                     = new JButton("Start");
@@ -29,8 +30,8 @@ class StressTester extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         timeLeft -= 1000;
-        SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss");
-        label.setText(df.format(timeLeft));
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        label.setText(df.format(new Date(timeLeft)));
         if (timeLeft <= 0){
             start.setEnabled(true);
             stop.setEnabled(false);
