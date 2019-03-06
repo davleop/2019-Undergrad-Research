@@ -11,13 +11,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.awt.event.*;
 import java.text.*;
+import java.util.concurrent.TimeUnit;
 
 class StressTester extends JFrame implements ActionListener {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run   = "Python/go.py";
     private final static String clean_up_file = "Python/cleanup.py";
-    private int timeLeft                      = 3600000;
+    private int timeLeft                      = 30000;//3600000;
     private JLabel label                      = new JLabel("");
     private Timer timer                       = new Timer(1000, this);
     private JButton start                     = new JButton("Start");
@@ -36,6 +37,7 @@ class StressTester extends JFrame implements ActionListener {
             exit.setEnabled(true);
             filepath.setEditable(true);
             timer.stop();
+            label.setText("");
             try {
                 results();
             } catch (FileNotFoundException f) {
@@ -355,7 +357,7 @@ class StressTester extends JFrame implements ActionListener {
                     filepath.setEditable(true);
                     exit.setEnabled(true);
                     timer.stop();
-                    timeLeft = 3600000;
+                    timeLeft = 30000;//3600000;
                     label.setText("");
                 }
             }

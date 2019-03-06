@@ -1,5 +1,5 @@
 import time
-import struct
+import string
 import random
 
 def large_write(filepath="./", seconds=600):
@@ -10,19 +10,16 @@ def large_write(filepath="./", seconds=600):
 
 	j = 0
 	while end - start < seconds:
-
-		f = open(cat, "a")
-
-		choice = random.choice(range(-0x80,0x80))
+		choice = random.choice(string.printable)
 		try:
-			f.write(choice * (2 ** 20) * 256)
+			f = open(cat, "a")
+			f.write(choice * ((2 ** 20) * 256))
+			f.close();
 		except:
 			raise Exception("Oh no!")
 
 		j += 1
 		end = time.time()
-
-	f.close()
 
 	return (end - start, j)
 

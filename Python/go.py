@@ -36,7 +36,6 @@ def main():
 	# Run the test
 	runner = Runner()
 	runner.go()
-	# make a csv file
 
 	wR = runner.writeRand
 	wS = runner.writeSameChar

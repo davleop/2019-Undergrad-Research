@@ -83,12 +83,19 @@ class Runner():
 			print ("Something went wrong in Append Stress Test...")
 
 	def go(self, seconds=600):
+		print ("Doing write rand...")
 		self.__writeRandom(seconds)
+		print ("Doing write seq...")
 		self.__writeSameChar(seconds)
+		print ("Doing append rand...")
 		self.__appendRandom(seconds)
+		print ("Doing append seq...")
 		self.__appendSameChar(seconds)
+		print ("Doing large write...")
 		self.__largeWrite(seconds)
+		print ("Reading...")
 		self.__readTest(seconds)
+		print ("Done.")
 
 	def __str__(self):
 		string =  "Write passes with random character : " + str(self.__writePassesRandom)    + "\n"
