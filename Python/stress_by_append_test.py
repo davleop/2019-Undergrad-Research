@@ -28,21 +28,12 @@ def append(choice=random.choice(string.printable), filepath="./", seconds=600):
 	return(end - start, j)
 
 def main():
-	#print ("Append:")
+	print ("Append:")
 	t, j = append(filepath="e:\\", seconds=5)
 	print ("e:\\")
 	print (t)
 	print (j)
 
-	#t, j = append(filepath="f:\\", seconds=5)
-	#print ("f:\\")
-	#print (t)
-	#print (j)
-
-	#t, j = append(filepath="g:\\", seconds=5)
-	#print ("g:\\")
-	#print (t)
-	#print (j)
 
 if __name__ == '__main__':
 	main()

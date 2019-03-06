@@ -13,7 +13,7 @@ def large_write(filepath="./", seconds=600):
 		choice = random.choice(string.printable)
 		try:
 			f = open(cat, "a")
-			f.write(choice * ((2 ** 20) * 256))
+			f.write(choice * ((2 ** 20) * 256)) # 256 Mb
 			f.close();
 		except:
 			raise Exception("Oh no!")
@@ -24,6 +24,7 @@ def large_write(filepath="./", seconds=600):
 	return (end - start, j)
 
 def main():
+	print ("Large:")
 	t, j = large_write("e:\\", 5)
 
 	print (t)

@@ -28,21 +28,11 @@ def writer(choice=random.choice(string.printable), filepath="./", seconds=600):
 	return(end - start, j)
 
 def main():
-	#print ("Write:")
+	print ("Write:")
 	t, j = writer(filepath="e:\\", seconds=5)
 	print ("e:\\")
 	print (t)
 	print (j)
-
-	#t, j = writer(filepath="f:\\", seconds=5)
-	#print ("f:\\")
-	#print (t)
-	#print (j)
-
-	#t, j = writer(filepath="g:\\", seconds=5)
-	#print ("g:\\")
-	#print (t)
-	#print (j)
 
 if __name__ == '__main__':
 	main()
