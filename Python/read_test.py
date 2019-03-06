@@ -8,10 +8,9 @@ def read_test(filename="./", seconds=600):
 	start = time.time()
 	end   = time.time()
 
-	something = 0
 
 	while end - start < seconds:
-		lst = []
+		something = 0
 		f = open(cat, "r")
 		blob = f.read()
 		for byte in blob:
