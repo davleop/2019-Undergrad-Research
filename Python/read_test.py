@@ -8,12 +8,14 @@ def read_test(filename="./", seconds=600):
 	start = time.time()
 	end   = time.time()
 
+	something = 0
+
 	while end - start < seconds:
 		lst = []
-		f = open(cat, "rb")
-		blob = bytearray(f.read())
+		f = open(cat, "r")
+		blob = f.read()
 		for byte in blob:
-			lst.append(byte)
+			something ^= byte
 		end = time.time()
 		j += 1
 		f.close()

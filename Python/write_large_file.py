@@ -15,10 +15,10 @@ def large_write(filepath="./", seconds=600):
 			f = open(cat, "a")
 			f.write(choice * ((2 ** 20) * 256)) # 256 Mb
 			f.close();
+			j += 1
 		except:
-			raise Exception("Oh no!")
+			pass
 
-		j += 1
 		end = time.time()
 
 	return (end - start, j)

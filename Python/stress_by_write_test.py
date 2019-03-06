@@ -17,9 +17,12 @@ def writer(choice=random.choice(string.printable), filepath="./", seconds=600):
 	start = time.time()
 	end   = time.time()
 	while end - start < seconds:
-		f = open(cat, 'w')
-		f.write(choice * ((2 ** 20) * 256)) # 256 Mb
-		f.close()
+		try:
+			f = open(cat, 'w')
+			f.write(choice * ((2 ** 20) * 256)) # 256 Mb
+			f.close()
+		except:
+			remove(cat)
 		end = time.time()
 		j += 1
 
