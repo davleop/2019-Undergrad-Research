@@ -18,7 +18,7 @@ class StressTester extends JFrame implements ActionListener {
     private static String OS = System.getProperty("os.name").toLowerCase();
     private final static String file_to_run   = "Python/go.py";
     private final static String clean_up_file = "Python/cleanup.py";
-    private int timeLeft                      = 30000;//3600000;
+    private int timeLeft                      = 4140000;//3600000;
     private JLabel label                      = new JLabel("");
     private Timer timer                       = new Timer(1000, this);
     private JButton start                     = new JButton("Start");
@@ -29,7 +29,7 @@ class StressTester extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         timeLeft -= 1000;
-        SimpleDateFormat df = new SimpleDateFormat("mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss");
         label.setText(df.format(timeLeft));
         if (timeLeft <= 0){
             start.setEnabled(true);
@@ -357,7 +357,7 @@ class StressTester extends JFrame implements ActionListener {
                     filepath.setEditable(true);
                     exit.setEnabled(true);
                     timer.stop();
-                    timeLeft = 30000;//3600000;
+                    timeLeft = 4140000;//3600000;
                     label.setText("");
                 }
             }
