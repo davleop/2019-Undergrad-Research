@@ -1,7 +1,10 @@
 import os
 
 def remove(filename): # prefered to get full file path
-	os.remove(filename)
+	try:
+		os.remove(filename)
+	except:
+		pass
 
 def main():
 	remove()

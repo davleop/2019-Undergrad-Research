@@ -14,41 +14,57 @@ import java.awt.event.*;
 import java.text.*;
 import java.util.concurrent.TimeUnit;
 
-class StressTester extends JFrame implements ActionListener {
+class StressTester extends JFrame {
     private String path = "";
     private static String OS = System.getProperty("os.name").toLowerCase();
-    private final static String file_to_run   = "Python/go.py";
     private final static String clean_up_file = "Python/cleanup.py";
-    private int timeLeft                      = 4140000;//3600000;
-    private JLabel label                      = new JLabel("");
-    private Timer timer                       = new Timer(1000, this);
+
     private JButton start                     = new JButton("Start");
     private JButton stop                      = new JButton("Stop");
     private JButton exit                      = new JButton("Exit");
     private JTextField filepath               = new JTextField(12);
-    private Thread thread2;
 
-    public void actionPerformed(ActionEvent e) {
-        timeLeft -= 1000;
-        if (timeLeft >= 3600000) {
-            SimpleDateFormat df = new SimpleDateFormat("mm:ss");
-            label.setText("01:" + df.format(new Date(timeLeft)));
-        } else {
-            SimpleDateFormat df = new SimpleDateFormat("mm:ss");
-            label.setText("00:" + df.format(new Date(timeLeft)));
-        }
-        if (timeLeft <= 0){
+    private static JProgressBar bar = new JProgressBar(0, 100);
+    private static JPanel panel = new JPanel();
+
+    private void runTest(String cmd, String arg, String type) {
+        try {
+            go(cmd, arg, type + " Python/stress_by_write_test_rand.py"); // Write rand
+            bar.setValue(15);
+            bar.update(bar.getGraphics());
+            
+            go(cmd, arg, type + " Python/stress_by_write_test_sequ.py"); // Write seq
+            bar.setValue(33);
+            bar.update(bar.getGraphics());
+            
+            go(cmd, arg, type + " Python/stress_by_append_test_rand.py"); // Append rand
+            bar.setValue(48);
+            bar.update(bar.getGraphics());
+            
+            go(cmd, arg, type + " Python/stress_by_append_test_sequ.py"); // Append seq
+            bar.setValue(66);
+            bar.update(bar.getGraphics());
+            
+            go(cmd, arg, type + " Python/write_large_file.py"); // Large write
+            
+
+            go(cmd, arg, type + " Python/read_test.py"); // Read
+            bar.setValue(100);
+            bar.update(bar.getGraphics());
+            
             start.setEnabled(true);
             stop.setEnabled(false);
             exit.setEnabled(true);
             filepath.setEditable(true);
-            timer.stop();
-            label.setText("");
+
             try {
                 results();
             } catch (FileNotFoundException f) {
                 System.out.println("File is not found...");
             }
+
+        } catch (Exception e) {
+            System.out.println("Python failed");
         }
     }
 
@@ -56,47 +72,19 @@ class StressTester extends JFrame implements ActionListener {
         try {
             if (isWindows()) {
                 if (go("cmd.exe", "/c", "python --version").contains("Python 3")) {
-                    thread2 = new Thread() {
-                        public void run() {
-                            try {
-                                go("cmd.exe", "/c", "python " + file_to_run);
-                            } catch (IOException o) {
-                                System.out.println("Failed to execute Python");
-                            }
-                        }
-                    };
+                    // python
+                    runTest("cmd.exe", "/c", "python");
                 } else {
-                    thread2 = new Thread() {
-                        public void run() {
-                            try {
-                                go("cmd.exe", "/c", "python3 " + file_to_run);
-                            } catch (IOException o) {
-                                System.out.println("Failed to execute Python");
-                            }
-                        }
-                    };
+                    // python3
+                    runTest("cmd.exe", "/c", "python3");
                 }
             } else if (isUnix()) {
                 if (go("bash", "-c", "python --version").contains("Python 3")) {
-                    thread2 = new Thread() {
-                        public void run() {
-                            try {
-                                go("bash", "-c", "python " + file_to_run);
-                            } catch (IOException o) {
-                                System.out.println("Failed to execute Python");
-                            }
-                        }
-                    };
+                    // python
+                    runTest("bash", "-c", "python");
                 } else {
-                    thread2 = new Thread() {
-                        public void run() {
-                            try {
-                                go("bash", "-c", "python3 " + file_to_run);
-                            } catch (IOException o) {
-                                System.out.println("Failed to execute Python");
-                            }
-                        }
-                    };
+                    // python3
+                    runTest("bash", "-c", "python3");
                 }
             } else {
                 System.out.println("Not supported operating system.");
@@ -207,7 +195,7 @@ class StressTester extends JFrame implements ActionListener {
         results.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         results.setResizable(false);
 
-        String lines[] = new String[5];
+        String lines[] = new String[3];
 
         File file = new File("readme.txt");
         Scanner s = new Scanner(file);
@@ -215,8 +203,6 @@ class StressTester extends JFrame implements ActionListener {
         lines[0] = s.next();
         lines[1] = s.next();
         lines[2] = s.next();
-        lines[3] = s.next();
-        lines[4] = s.next();
 
         JButton button = new JButton("OK");
 
@@ -231,17 +217,13 @@ class StressTester extends JFrame implements ActionListener {
             }
         });
 
-        JLabel one = new JLabel("DAY: " + lines[0]);
-        JLabel two = new JLabel("WRITE: " + lines[1]);
-        JLabel thr = new JLabel("APPEND: " + lines[2]);
-        JLabel fou = new JLabel("LARGE WRITE: " + lines[3]);
-        JLabel fiv = new JLabel("READ: " + lines[4]);
+        JLabel one = new JLabel("WRITE: " + lines[0]);
+        JLabel two = new JLabel("APPEND: " + lines[1]);
+        JLabel thr = new JLabel("READ: " + lines[2]);
 
         results.add(one);
         results.add(two);
         results.add(thr);
-        results.add(fou);
-        results.add(fiv);
         results.add(button);
 
         results.setVisible(true);
@@ -288,23 +270,7 @@ class StressTester extends JFrame implements ActionListener {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            Thread thread1 = new Thread() {
-                                public void run() {
-                                    timer.setInitialDelay(10000); // 10 Second delay to ensure threads start
-                                    timer.start();
-                                }
-                            };
-
                             runPython();
-
-                            try {
-                                thread2.join();
-                                thread1.join();
-                            } catch (Exception ex) {
-                                System.out.println("Threads failed to join...");
-                            }
-                            thread1.start();
-                            thread2.start();
 
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
@@ -325,23 +291,7 @@ class StressTester extends JFrame implements ActionListener {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            Thread thread1 = new Thread() {
-                                public void run() {
-                                    timer.setInitialDelay(10000); // 10 Second delay to ensure threads start
-                                    timer.start();
-                                }
-                            };
-
                             runPython();
-
-                            try {
-                                thread2.join();
-                                thread1.join();
-                            } catch (Exception ex) {
-                                System.out.println("Threads failed to join...");
-                            }
-                            thread1.start();
-                            thread2.start();
 
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
@@ -362,9 +312,6 @@ class StressTester extends JFrame implements ActionListener {
                     stop.setEnabled(false);
                     filepath.setEditable(true);
                     exit.setEnabled(true);
-                    timer.stop();
-                    timeLeft = 4140000;//3600000;
-                    label.setText("");
                 }
             }
         });
@@ -381,8 +328,8 @@ class StressTester extends JFrame implements ActionListener {
         });
 
         add(BorderLayout.NORTH, buttonPanel);
-        add(BorderLayout.CENTER, label);
         add(BorderLayout.SOUTH, filePanel);
+        add(panel.add(bar));
     }
 
     private static void createGUI() {

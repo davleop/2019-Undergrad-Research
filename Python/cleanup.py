@@ -18,6 +18,36 @@ def clean_files(filepath=open("./filepath.txt", 'r').readline().strip()):
 	except:
 		pass
 
+	try:
+		os.remove('a')
+	except:
+		pass
+
+	try:
+		os.remove('b')
+	except:
+		pass
+
+	try:
+		os.remove('c')
+	except:
+		pass
+
+	try:
+		os.remove('d')
+	except:
+		pass
+
+	try:
+		os.remove('e')
+	except:
+		pass
+
+	try:
+		os.remove("filepath.txt")
+	except:
+		pass
+
 def main():
 	clean_files()
 

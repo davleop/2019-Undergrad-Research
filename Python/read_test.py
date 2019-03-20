@@ -1,17 +1,16 @@
 import time
+from write import *
 from remove_file import remove
 
-def read_test(filename="./", seconds=600):
-	cat = filename + "largeByte.txt"
+def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600):
+	cat = filepath + "largeByte.txt"
 	j   = 0
 
-	start = time.time()
-	end   = time.time()
-
+	start = end = time.time()
 
 	while end - start < seconds:
 		something = 0
-		f = open(cat, "r")
+		f = open(cat, "rb")
 		blob = f.read()
 		for byte in blob:
 			something ^= byte
@@ -24,10 +23,9 @@ def read_test(filename="./", seconds=600):
 	return (end - start, j)
 
 def main():
-	t, j = read_test("e:\\", 5)
-
-	print (t)
-	print (j)
+	t, j = read_test(seconds=5)
+	write("e", j)
+	wrapUp()
 
 if __name__ == '__main__':
 	main()

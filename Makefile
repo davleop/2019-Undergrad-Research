@@ -31,5 +31,6 @@ run_write:
 			python stress_by_write_test
 clean:
 			rm -rf *.class
-			rm filepath.txt
+			rm -f filepath.txt
 			rm -rf Python/__pycache__
+			rm -f a b c d e

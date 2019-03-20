@@ -1,9 +1,10 @@
 import time
 import random
 import string
+from write import write
 from remove_file import remove
 
-def writer(choice=random.choice(string.printable), filepath="./", seconds=600):
+def writer(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600):
 	'''
 	Returns a tuple of (elapsed time, passes)
 	This will go on for 10 minutes or 600 seconds
@@ -14,8 +15,8 @@ def writer(choice=random.choice(string.printable), filepath="./", seconds=600):
 
 	j = 0
 
-	start = time.time()
-	end   = time.time()
+	start = end = time.time()
+	choice = "A"
 	while end - start < seconds:
 		try:
 			f = open(cat, 'w')
@@ -31,11 +32,8 @@ def writer(choice=random.choice(string.printable), filepath="./", seconds=600):
 	return(end - start, j)
 
 def main():
-	print ("Write:")
-	t, j = writer(filepath="e:\\", seconds=5)
-	print ("e:\\")
-	print (t)
-	print (j)
+	t, j = writer(seconds=5)
+	write("b", j)
 
 if __name__ == '__main__':
 	main()
