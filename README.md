@@ -2,6 +2,8 @@
 
 This a repository is research done under WTAMU at the Killgore Research Center.
 
+Our front-end is running ```Java 11``` and then we used our backend code with ```Python 3.4.5```.
+
 ## Installation
 
 You have to have ```Python 3.4.*``` installed along with Java version 8 or newer.
