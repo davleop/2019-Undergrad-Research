@@ -28,10 +28,12 @@ class StressTester extends JFrame {
     private static JPanel panel = new JPanel();
 
     private Thread thread1;
-    private Thread thread2;
+
+    private boolean stopped = false;
 
     private void runTest(String cmd, String arg, String type) {
         try {
+            bar.setIndeterminate(false);
             go(cmd, arg, type + " Python/stress_by_write_test_rand.py"); // Write rand
             bar.setValue(15);
             bar.update(bar.getGraphics());
@@ -50,7 +52,6 @@ class StressTester extends JFrame {
             
             go(cmd, arg, type + " Python/write_large_file.py"); // Large write
             
-
             go(cmd, arg, type + " Python/read_test.py"); // Read
             bar.setValue(100);
             bar.update(bar.getGraphics());
@@ -59,9 +60,12 @@ class StressTester extends JFrame {
             stop.setEnabled(false);
             exit.setEnabled(true);
             filepath.setEditable(true);
+            bar.setValue(0);
+            bar.setIndeterminate(true);
 
             try {
-                results();
+                if (stopped)
+                    results();
             } catch (FileNotFoundException f) {
                 System.out.println("File is not found...");
             }
@@ -273,6 +277,8 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
+                            stopped = false;
+
                             Thread thread1 = new Thread () {
                                 public void run() {
                                     runPython();
@@ -305,6 +311,8 @@ class StressTester extends JFrame {
                             // Save to file so that the Python program can know where to go...
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
+
+                            stopped = false;
 
                             Thread thread1 = new Thread () {
                                 public void run() {
@@ -340,6 +348,9 @@ class StressTester extends JFrame {
                     } catch (Exception e) {
                         System.out.println("This may take a while...");
                     }
+                    stopped = true;
+                    bar.setValue(0);
+                    bar.setIndeterminate(true);
                     start.setEnabled(true);
                     stop.setEnabled(false);
                     filepath.setEditable(true);
@@ -366,6 +377,10 @@ class StressTester extends JFrame {
 
         add(BorderLayout.NORTH, buttonPanel);
         add(BorderLayout.SOUTH, filePanel);
+        
+        bar.setValue(0);
+        bar.setIndeterminate(true);
+        bar.setStringPainted(true);
         add(panel.add(bar));
     }
 
