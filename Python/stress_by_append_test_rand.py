@@ -32,7 +32,7 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 	return(end - start, j)
 
 def main():
-	t, j = append(seconds=5)
+	t, j = append()
 	write("c", j)
 
 

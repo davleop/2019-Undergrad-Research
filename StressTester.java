@@ -27,6 +27,9 @@ class StressTester extends JFrame {
     private static JProgressBar bar = new JProgressBar(0, 100);
     private static JPanel panel = new JPanel();
 
+    private Thread thread1;
+    private Thread thread2;
+
     private void runTest(String cmd, String arg, String type) {
         try {
             go(cmd, arg, type + " Python/stress_by_write_test_rand.py"); // Write rand
@@ -64,7 +67,7 @@ class StressTester extends JFrame {
             }
 
         } catch (Exception e) {
-            System.out.println("Python failed");
+            System.out.println("This might take a minute...");
         }
     }
 
@@ -270,7 +273,19 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            runPython();
+                            Thread thread1 = new Thread () {
+                                public void run() {
+                                    runPython();
+                                }
+                            };
+
+                            try {
+                                thread1.join();
+                            } catch (Exception e) {
+                                throw new RuntimeException("Thread interrupt");
+                            }
+
+                            thread1.start();
 
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
@@ -291,7 +306,19 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            runPython();
+                            Thread thread1 = new Thread () {
+                                public void run() {
+                                    runPython();
+                                }
+                            };
+
+                            try {
+                                thread1.join();
+                            } catch (Exception e) {
+                                throw new RuntimeException("Thread interrupt");
+                            }
+
+                            thread1.start();
 
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
@@ -308,6 +335,11 @@ class StressTester extends JFrame {
                 boolean response = popup();
                 if (response) {
                     stopPython();
+                    try {
+                        thread1.interrupt();
+                    } catch (Exception e) {
+                        System.out.println("This may take a while...");
+                    }
                     start.setEnabled(true);
                     stop.setEnabled(false);
                     filepath.setEditable(true);
@@ -321,6 +353,11 @@ class StressTester extends JFrame {
                 boolean response = popup();
                 if (response) {
                     stopPython();
+                    try {
+                        thread1.interrupt();
+                    } catch (Exception e) {
+                        System.out.println("Please wait while I clean up...");
+                    }
                     setVisible(false);
                     dispose();
                 }

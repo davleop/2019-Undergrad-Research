@@ -8,7 +8,7 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 	j = 0
 	choice = random.choice(string.printable)
 	f = open(cat, "w")
-	f.write(choice * ((2 ** 20) * 256)) # 3 GB == 3000 *******
+	f.write(choice * ((2 ** 20) * 3000)) # 3 GB == 3000 *******
 	f.close();
 
 def main():

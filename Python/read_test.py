@@ -23,7 +23,7 @@ def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=6
 	return (end - start, j)
 
 def main():
-	t, j = read_test(seconds=5)
+	t, j = read_test()
 	write("e", j)
 	wrapUp()
 

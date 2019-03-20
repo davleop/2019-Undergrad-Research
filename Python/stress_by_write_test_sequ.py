@@ -32,7 +32,7 @@ def writer(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 	return(end - start, j)
 
 def main():
-	t, j = writer(seconds=5)
+	t, j = writer()
 	write("b", j)
 
 if __name__ == '__main__':
