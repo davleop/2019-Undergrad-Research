@@ -14,6 +14,9 @@ import java.awt.event.*;
 import java.text.*;
 import java.util.concurrent.TimeUnit;
 
+// TODO (David): Make Image directory. Put Images in it. Fix Code.
+//               Go to bed zzz...
+
 class StressTester extends JFrame {
     private String path = "";
     
