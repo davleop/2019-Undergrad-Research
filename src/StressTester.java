@@ -26,7 +26,6 @@ class StressTester extends JFrame {
 
     private static JProgressBar bar = new JProgressBar(0, 100);
     private static JPanel panel = new JPanel();
-
     private Thread thread1;
 
     private void runTest(String cmd, String arg, String type) {
@@ -308,8 +307,6 @@ class StressTester extends JFrame {
                             // Save to file so that the Python program can know where to go...
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
-
-                            
 
                             Thread thread1 = new Thread () {
                                 public void run() {
