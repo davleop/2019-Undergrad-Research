@@ -12,7 +12,7 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 	f.close();
 
 def main():
-	large_write("e:\\")
+	large_write()
 
 if __name__ == '__main__':
 	main()

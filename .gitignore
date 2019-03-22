@@ -3,3 +3,4 @@ readme.txt
 start.txt
 largeByte.txt
 *.class
+__pycache__/

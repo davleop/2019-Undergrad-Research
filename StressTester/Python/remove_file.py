@@ -7,7 +7,7 @@ def remove(filename): # prefered to get full file path
 		pass
 
 def main():
-	remove()
+	remove("testfile.txt")
 
 if __name__ == '__main__':
 	main()

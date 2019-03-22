@@ -29,13 +29,14 @@ run_append:
 run_write:
 			cls
 			python stress_by_write_test
-jar:
+jar: *.class
 			cls
 			rm -f *.jar
 			jar cvfm StressTester.jar mani.mf .
+			cp StressTester.jar ../StressTester/
 run_jar:
 			cls
-			java -jar StressTester.jar
+			java -jar ../StressTester/StressTester.jar
 clean:
 			rm -rf *.class
 			rm -f filepath.txt
