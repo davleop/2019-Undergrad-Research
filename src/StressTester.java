@@ -16,8 +16,11 @@ import java.util.concurrent.TimeUnit;
 
 class StressTester extends JFrame {
     private String path = "";
+    
     private static String OS = System.getProperty("os.name").toLowerCase();
-    private final static String clean_up_file = "Python/cleanup.py";
+    
+    private final static String clean_up_file   = "Python/cleanup.py";
+    private final static String last_clean_file = "Python/lastClean.py";
 
     private JButton start                     = new JButton("Start");
     private JButton stop                      = new JButton("Stop");
@@ -26,6 +29,7 @@ class StressTester extends JFrame {
 
     private static JProgressBar bar = new JProgressBar(0, 100);
     private static JPanel panel = new JPanel();
+    
     private Thread thread1;
 
     private void runTest(String cmd, String arg, String type) {
@@ -48,6 +52,8 @@ class StressTester extends JFrame {
             bar.update(bar.getGraphics());
             
             go(cmd, arg, type + " Python/write_large_file.py"); // Large write
+            bar.setValue(81);
+            bar.update(bar.getGraphics());
             
             go(cmd, arg, type + " Python/read_test.py"); // Read
             bar.setValue(100);
@@ -103,7 +109,6 @@ class StressTester extends JFrame {
                 if (go("cmd.exe", "/c", "python --version").contains("Python 3")) {
                     try {
                         go("cmd.exe", "/c", "taskkill /IM python.exe /F && python " + clean_up_file);
-                        go("cmd.exe", "/c", "python " + clean_up_file);
                     } catch (IOException o) {
                         System.out.println("Failed to kill Python");
                     }
@@ -123,9 +128,47 @@ class StressTester extends JFrame {
                     }
                 } else {
                     try {
-                        go("bash", "-c", "pkill python && python3 " + clean_up_file);
+                        go("bash", "-c", "pkill python3 && python3 " + clean_up_file);
                     } catch (IOException o) {
                         System.out.println("Failed to kill Python");
+                    }
+                }
+            } else {
+                System.out.println("Not supported operating system.");
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong while running Python 3 ...");
+        }
+    }
+
+    private static void lastClean() {
+        try {
+            if (isWindows()) {
+                if (go("cmd.exe", "/c", "python --version").contains("Python 3")) {
+                    try {
+                        go("cmd.exe", "/c", "python " + last_clean_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to remove readme.txt file");
+                    }
+                } else {
+                    try {
+                        go("cmd.exe", "/c", "python3 " + last_clean_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to remove readme.txt file");
+                    }
+                }
+            } else if (isUnix()) {
+                if (go("bash", "-c", "python --version").contains("Python 3")) {
+                    try {
+                        go("bash", "-c", "python " + last_clean_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to remove readme.txt file");
+                    }
+                } else {
+                    try {
+                        go("bash", "-c", "python3 " + last_clean_file);
+                    } catch (IOException o) {
+                        System.out.println("Failed to remove readme.txt file");
                     }
                 }
             } else {
@@ -214,6 +257,7 @@ class StressTester extends JFrame {
                 boolean response = popup();
                 if (response){
                     results.dispose();
+                    lastClean();
                 } else {
                     // do nothing
                 }
