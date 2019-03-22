@@ -14,9 +14,7 @@ import java.awt.event.*;
 import java.text.*;
 import java.util.concurrent.TimeUnit;
 
-// TODO (David): Make Image directory. Put Images in it. Fix Code.
-//               Go to bed zzz...
-
+@SuppressWarnings("serial")
 class StressTester extends JFrame {
     private String path = "";
     
@@ -232,7 +230,7 @@ class StressTester extends JFrame {
         JFrame results = new JFrame("RESULTS");
         results.getContentPane().setLayout(new GridLayout(5,5));
 
-        ImageIcon img = new ImageIcon("check.png");
+        ImageIcon img = new ImageIcon(StressTester.class.getResource("Images/check.png"));
         results.setIconImage(img.getImage());
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -284,7 +282,7 @@ class StressTester extends JFrame {
         this.getContentPane().setLayout(new FlowLayout());
 
         // set application icon
-        ImageIcon img = new ImageIcon("WT.png");
+        ImageIcon img = new ImageIcon(StressTester.class.getResource("Images/WT.png"));
         this.setIconImage(img.getImage());
 
         stop.setEnabled(false);

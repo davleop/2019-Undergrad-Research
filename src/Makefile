@@ -1,41 +1,41 @@
 all:
-			cls
+			clear
 			javac -Xdiags:verbose StressTester.java
 			java StressTester
 c:
-			cls
+			clear
 			javac -Xdiags:verbose StressTester.java
 go:
-			cls
+			clear
 			python Python/go.py
 go3:
-			cls
+			clear
 			python3 Python/go.py
 py:
-			cls
+			clear
 			python Python/runner.py
 py3:
-			cls
+			clear
 			python3 Python/runner.py
 run_write3:
-			cls
+			clear
 			python3 stress_by_write_test.py
 run_append3:
-			cls
+			clear
 			python3 stress_by_append_test.py
 run_append:
-			cls
+			clear
 			python stress_by_append_test.py
 run_write:
-			cls
+			clear
 			python stress_by_write_test
 jar: *.class
-			cls
+			clear
 			rm -f *.jar
 			jar cvfm StressTester.jar mani.mf .
 			cp StressTester.jar ../StressTester/
 run_jar:
-			cls
+			clear
 			java -jar ../StressTester/StressTester.jar
 clean:
 			rm -rf *.class
