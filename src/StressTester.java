@@ -341,7 +341,6 @@ class StressTester extends JFrame {
                 } else if (isUnix()) {
                    if (Files.exists(Paths.get(string)) && (string.contains("/media")) || string.contains("/mnt")) {
                         try {
-                            try {
                             // Disable things so that the process isn't screwed up...
                             start.setEnabled(false);
                             exit.setEnabled(false);
@@ -368,10 +367,10 @@ class StressTester extends JFrame {
 
                         } catch (IOException e) {
                             System.out.println("INVALID WRITE --> TRY AGAIN LATER");
-                        }  System.out.println("INVALID WRITE --> TRY AGAIN LATER");
+                        }
                     } else {
                         invalidPath();
-                    } 
+                    }
                 }
             }
         });
