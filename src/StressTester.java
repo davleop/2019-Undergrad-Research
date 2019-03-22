@@ -29,8 +29,6 @@ class StressTester extends JFrame {
 
     private Thread thread1;
 
-    private boolean stopped = false;
-
     private void runTest(String cmd, String arg, String type) {
         try {
             bar.setIndeterminate(false);
@@ -64,8 +62,7 @@ class StressTester extends JFrame {
             bar.setIndeterminate(true);
 
             try {
-                if (stopped)
-                    results();
+                results();
             } catch (FileNotFoundException f) {
                 System.out.println("File is not found...");
             }
