@@ -274,7 +274,7 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            stopped = false;
+                            
 
                             Thread thread1 = new Thread () {
                                 public void run() {
@@ -309,7 +309,7 @@ class StressTester extends JFrame {
                             List<String> lines = Arrays.asList(string);
                             Files.write(file, lines, Charset.forName("UTF-8"));
 
-                            stopped = false;
+                            
 
                             Thread thread1 = new Thread () {
                                 public void run() {
@@ -345,7 +345,6 @@ class StressTester extends JFrame {
                     } catch (Exception e) {
                         System.out.println("This may take a while...");
                     }
-                    stopped = true;
                     bar.setValue(0);
                     bar.setIndeterminate(true);
                     start.setEnabled(true);
