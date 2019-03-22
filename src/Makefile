@@ -29,6 +29,10 @@ run_append:
 run_write:
 			cls
 			python stress_by_write_test
+
+jar:
+			java -jar StressTester.jar
+
 clean:
 			rm -rf *.class
 			rm -f filepath.txt
