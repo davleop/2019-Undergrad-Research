@@ -260,7 +260,6 @@ class StressTester extends JFrame {
                 boolean response = popup();
                 if (response){
                     results.dispose();
-                    lastClean();
                 } else {
                     // do nothing
                 }
@@ -414,6 +413,7 @@ class StressTester extends JFrame {
                     }
                     setVisible(false);
                     dispose();
+                    lastClean();
                 }
             }
         });
