@@ -338,7 +338,7 @@ class StressTester extends JFrame {
                     } else {
                         invalidPath();
                     }
-                } else if (isUnix()) {
+                } else if (isUnix()) { // TODO (David): Check for last char to see if it is a '/' or not. If not add one...
                    if (Files.exists(Paths.get(string)) && (string.contains("/media")) || string.contains("/mnt")) {
                         try {
                             // Disable things so that the process isn't screwed up...
