@@ -146,12 +146,14 @@ class StressTester extends JFrame {
                 if (go("cmd.exe", "/c", "python --version").contains("Python 3")) {
                     try {
                         go("cmd.exe", "/c", "python " + last_clean_file);
+                        go("cmd.exe", "/c", "taskkill /IM java.exe /F");
                     } catch (IOException o) {
                         System.out.println("Failed to remove readme.txt file");
                     }
                 } else {
                     try {
                         go("cmd.exe", "/c", "python3 " + last_clean_file);
+                        go("cmd.exe", "/c", "taskkill /IM java.exe /F");
                     } catch (IOException o) {
                         System.out.println("Failed to remove readme.txt file");
                     }
@@ -160,12 +162,14 @@ class StressTester extends JFrame {
                 if (go("bash", "-c", "python --version").contains("Python 3")) {
                     try {
                         go("bash", "-c", "python " + last_clean_file);
+                        go("bash", "-c", "pkill java");
                     } catch (IOException o) {
                         System.out.println("Failed to remove readme.txt file");
                     }
                 } else {
                     try {
                         go("bash", "-c", "python3 " + last_clean_file);
+                        go("bash", "-c", "pkill java");
                     } catch (IOException o) {
                         System.out.println("Failed to remove readme.txt file");
                     }
