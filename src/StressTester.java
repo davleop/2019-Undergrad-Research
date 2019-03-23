@@ -64,8 +64,6 @@ class StressTester extends JFrame {
             stop.setEnabled(false);
             exit.setEnabled(true);
             filepath.setEditable(true);
-            bar.setValue(0);
-            bar.setIndeterminate(true);
 
             try {
                 results();
@@ -313,6 +311,7 @@ class StressTester extends JFrame {
                             exit.setEnabled(false);
                             stop.setEnabled(true);
                             filepath.setEditable(false);
+                            bar.setValue(0);
                             
                             // Save to file so that the Python program can know where to go...
                             List<String> lines = Arrays.asList(string);
@@ -340,7 +339,7 @@ class StressTester extends JFrame {
                     }
                 } else if (isUnix()) {
                    if (Files.exists(Paths.get(string)) && (string.contains("/media")) || string.contains("/mnt")) {
-                        if (string[string.length() - 1] != '/')
+                        if (string.charAt(string.length() - 1) != '/')
                             string += "/";
 
                         try {
@@ -349,6 +348,7 @@ class StressTester extends JFrame {
                             exit.setEnabled(false);
                             stop.setEnabled(true);
                             filepath.setEditable(false);
+                            bar.setValue(0);
                             
                             // Save to file so that the Python program can know where to go...
                             List<String> lines = Arrays.asList(string);
