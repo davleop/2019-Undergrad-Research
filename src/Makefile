@@ -1,7 +1,7 @@
 all:
 			clear
 			javac -Xdiags:verbose StressTester.java
-			java StressTester
+			-java StressTester
 c:
 			clear
 			javac -Xdiags:verbose StressTester.java
