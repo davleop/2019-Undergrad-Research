@@ -1,0 +1,52 @@
+  <html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['line']});
+      google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+
+      data.addColumn('number', 'Day');
+      data.addColumn('number', 'SSD Write');
+      data.addColumn('number', 'SSD Append');
+      data.addColumn('number', 'HDD Write');
+      data.addColumn('number', 'HDD Append');
+      data.addColumn('number', 'Flashdrive Write');
+      data.addColumn('number', 'Flashdrive Append');
+      data.addColumn('number', 'Chromebook Write');
+      data.addColumn('number', 'Chromebook Append');
+
+      /* [ [Day[0], SSD Write[1], SSD Append[2], HDD Write[3], HDD Append[4],
+          Flashdrive Write[5], Flashdrive Append[6], Chromebook Write[7],
+          Chromebook Append[8]] ] */ 
+
+      let opz = [
+          [1,1,1,1,1,1,1,1,1],
+          [2,10,20,30,40,50,60,70,80],
+          [1,90,90,90,90,90,90,90,90]
+        ]
+
+      data.addRows(opz);
+
+      var options = {
+        chart: {
+          title: 'Power of Storage Drives Over Time',
+          subtitle: 'in Number of Completed Cycles'
+        },
+        width: 900,
+        height: 500
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+    </script>
+  </head>
+  <body>
+    <div id="linechart_material" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
