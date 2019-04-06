@@ -1,6 +1,7 @@
 import time
 import random
 import string
+import humanize
 from write import write
 from remove_file import remove
 
