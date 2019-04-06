@@ -11,6 +11,8 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 	It writes 256 Mb at a time.
 	'''
 
+	global cat
+
 	cat = filepath + "stress_by_append.txt"
 
 	j = 0
@@ -27,12 +29,13 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 		end = time.time()
 		j += 1
 
-	remove(cat)
+	total_time = end - start
 
-	return(end - start, j)
+	return(total_time, humanize.naturalsize((j * stat(cat).st_size) / total_time) + "/s")
 
 def main():
 	t, j = append()
+	remove(cat)
 	write("d", j)
 
 
