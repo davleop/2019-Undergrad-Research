@@ -1,6 +1,8 @@
 import time
 import random
 import string
+import humanize
+from os import stat
 from write import write
 from remove_file import remove
 
@@ -10,6 +12,8 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 	This will go on for 10 minutes or 600 seconds
 	It writes 256 Mb at a time.
 	'''
+
+	global cat
 
 	cat = filepath + "stress_by_append.txt"
 
@@ -27,12 +31,13 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 		end = time.time()
 		j += 1
 
-	remove(cat)
+	total_time = end - start
 
-	return(end - start, j)
+	return(total_time, humanize.naturalsize((j * stat(cat).st_size) / total_time) + "/s")
 
 def main():
 	t, j = append()
+	remove(cat)
 	write("c", j)
 
 
