@@ -11,7 +11,7 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 	f.write(choice * ((2 ** 20) * 1000)) # 1 GB == 1000 *******
 	f.write(choice * ((2 ** 20) * 1000)) # 1 GB == 1000 *******
 	f.write(choice * ((2 ** 20) * 1000)) # 1 GB == 1000 *******
-	f.close();
+	f.close()
 
 def main():
 	large_write()
