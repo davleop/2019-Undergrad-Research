@@ -249,9 +249,9 @@ class StressTester extends JFrame {
         File file = new File("readme.txt");
         Scanner s = new Scanner(file);
 
-        lines[0] = s.next();
-        lines[1] = s.next();
-        lines[2] = s.next();
+        lines[0] = s.nextLine();
+        lines[1] = s.nextLine();
+        lines[2] = s.nextLine();
 
         JButton button = new JButton("OK");
 

@@ -34,6 +34,8 @@ jar: *.class
 			rm -f *.jar
 			jar cvfm StressTester.jar mani.mf .
 			cp StressTester.jar ../StressTester/
+			rm -rf ../StressTester/Python/
+			cp -avr Python ../StressTester/Python
 run_jar:
 			clear
 			java -jar ../StressTester/StressTester.jar

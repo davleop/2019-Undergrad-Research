@@ -13,10 +13,6 @@ def wrapUp(): # TODO(David): Revise this method
 	r = float(open("d", 'r').readline().strip())
 	t = float(open("e", 'r').readline().strip())
 
-	# TODO (David): make this the place it converts bytes per second to human readable
-	#				everywhere else, make it just calculate bytes per second. Then 
-	#				remove the import statements in the other files and just keep it here.
-
 	write_avg  = (q + w) / 2.0
 	append_avg = (e + r) / 2.0
 	read       = t

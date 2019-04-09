@@ -1,7 +1,6 @@
 import time
 import random
 import string
-import humanize
 from os import stat
 from write import write
 from remove_file import remove
@@ -34,7 +33,7 @@ def writer(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 
 	total_time = end - start
 
-	return(total_time, humanize.naturalsize((j * stat(cat).st_size) / total_time) + "/s")
+	return(total_time, (j * stat(cat).st_size) / total_time)
 
 def main():
 	t, j = writer()

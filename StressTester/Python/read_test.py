@@ -1,5 +1,4 @@
 import time
-import humanize
 from write import *
 from os import stat
 from remove_file import remove
@@ -23,7 +22,7 @@ def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=6
 
 	total_time = end - start
 
-	return (total_time, humanize.naturalsize((j * stat(cat).st_size) / total_time) + "/s")
+	return (total_time, (j * stat(cat).st_size) / total_time)
 
 def main():
 	t, j = read_test()
