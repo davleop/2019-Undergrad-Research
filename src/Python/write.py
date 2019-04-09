@@ -5,12 +5,12 @@ def write(filename, data):
 	f.write(str(data))
 	f.close()
 
-def wrapUp():
-	q = int(open("a", 'r').readline().strip())
-	w = int(open("b", 'r').readline().strip())
-	e = int(open("c", 'r').readline().strip())
-	r = int(open("d", 'r').readline().strip())
-	t = int(open("e", 'r').readline().strip())
+def wrapUp(): # TODO(David): Revise this method
+	q = float(open("a", 'r').readline().strip()[:-5])
+	w = float(open("b", 'r').readline().strip()[:-5])
+	e = float(open("c", 'r').readline().strip()[:-5])
+	r = float(open("d", 'r').readline().strip()[:-5])
+	t = float(open("e", 'r').readline().strip()[:-5])
 
 	write_avg  = (q + w) / 2.0
 	append_avg = (e + r) / 2.0
