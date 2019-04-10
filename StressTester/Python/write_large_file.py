@@ -7,15 +7,48 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 
 	f = open(cat, "a")
 
+	# 1st Gig
+
 	choice = random.choice(string.printable)
-	f.write(choice * ((2 ** 20) * 1000)) # 1 GB == 1000 *******
+	f.write(choice * ((2 ** 20) * 256))
 	
 	choice = random.choice(string.printable)
-	f.write(choice * ((2 ** 20) * 1000)) # 1 GB == 1000 *******
+	f.write(choice * ((2 ** 20) * 256))
 	
 	choice = random.choice(string.printable)
-	f.write(choice * ((2 ** 20) * 1000)) # 1 GB == 1000 *******
+	f.write(choice * ((2 ** 20) * 256))
 	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+
+	# 2nd Gig
+
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+
+	# 3rd Gig
+
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+	
+	choice = random.choice(string.printable)
+	f.write(choice * ((2 ** 20) * 256))
+
 	f.close()
 
 def main():
