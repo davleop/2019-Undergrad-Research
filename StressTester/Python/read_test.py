@@ -2,7 +2,6 @@ import time
 from write import *
 from os import stat
 from remove_file import remove
-from collections import Counter
 
 def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600):
 	global cat
@@ -14,8 +13,8 @@ def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=6
 	while end - start < seconds:
 		something = 0
 		f = open(cat, "rb")
-		blob = f.read()
-		Counter(blob)
+		for chunk in iter(lambda: f.read(128), ""):
+			chunk += b"."
 		end = time.time()
 		j += 1
 		f.close()
