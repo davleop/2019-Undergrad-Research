@@ -6,7 +6,7 @@ def write(filename, data):
 	f.write(str(data))
 	f.close()
 
-def wrapUp(): # TODO(David): Revise this method
+def wrapUp():
 	q = float(open("a", 'r').readline().strip())
 	w = float(open("b", 'r').readline().strip())
 	e = float(open("c", 'r').readline().strip())
