@@ -2,6 +2,7 @@ import time
 from write import *
 from os import stat
 from remove_file import remove
+from collections import Counter
 
 def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600):
 	global cat
@@ -14,8 +15,7 @@ def read_test(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=6
 		something = 0
 		f = open(cat, "rb")
 		blob = f.read()
-		for byte in blob:
-			something ^= byte
+		Counter(blob)
 		end = time.time()
 		j += 1
 		f.close()
