@@ -5,10 +5,11 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 
 	cat = filepath + "largeByte.txt"
 
-	f = open(cat, "a")
 
 	# 1st Gig
 
+	f = open(cat, "a")
+
 	choice = random.choice(string.printable)
 	f.write(choice * ((2 ** 20) * 256))
 	
@@ -20,9 +21,13 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 	
 	choice = random.choice(string.printable)
 	f.write(choice * ((2 ** 20) * 256))
+
+	f.close()
 
 	# 2nd Gig
 
+	f = open(cat, "a")
+
 	choice = random.choice(string.printable)
 	f.write(choice * ((2 ** 20) * 256))
 	
@@ -35,7 +40,11 @@ def large_write(filepath=open("./filepath.txt", 'r').readline().strip()):
 	choice = random.choice(string.printable)
 	f.write(choice * ((2 ** 20) * 256))
 
+	f.close()
+
 	# 3rd Gig
+
+	f = open(cat, "a")
 
 	choice = random.choice(string.printable)
 	f.write(choice * ((2 ** 20) * 256))
