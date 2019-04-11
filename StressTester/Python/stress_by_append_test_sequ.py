@@ -32,7 +32,7 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 
 	total_time = end - start
 
-	return(total_time, (j * stat(cat).st_size) / total_time)
+	return(total_time, j * stat(cat).st_size / total_time)
 
 def main():
 	t, j = append()
